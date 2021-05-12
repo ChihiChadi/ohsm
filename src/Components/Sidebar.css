@@ -1,49 +1,116 @@
-.Sidebar {
-  height: 100%;
-  width: 331px;
-  background-color: rgb(48, 48, 48);
-  border: 1px solid rgb(48, 48, 48);
+#sidebar {
+  background: #ffffff;
+  grid-area: sidebar;
+  overflow-y: auto;
+  padding: 0px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  width: 312px;
+  border: lightgray 1px solid;
+  text-decoration: none;
+  margin-left: 0px;
+  height: 112%;
+}
+.sidebar__title h1 {
+  color: #265acc;
+}
+
+.sidebar__title {
   display: flex;
-  position: fixed;
+  justify-content: left;
+  align-items: center;
+  color: #f3f4f6;
+  margin-bottom: 20px;
+  color: #265acc;
+  padding-left: 12px;
+  padding-top: 7.5px;
+}
+.sidebar__menu {
+  width: 310px;
+  margin: 0;
+  border-top: 1px solid lightgrey;
+}
+
+.sidebar__title > h1 {
+  font-size: 20px;
+  display: inline;
+}
+
+.sidebar__title .CloseButton {
+  display: inline;
+  color: white;
+  margin-left: 103px;
+}
+
+.sidebar_responsive {
+  display: inline !important;
+  z-index: 9999 !important;
+  left: 0 !important;
+  position: absolute;
+  height: 100%;
 }
 .SidebarList {
   margin-top: 0;
   height: auto;
-  width: 100%;
+  width: 310px;
   padding: 0;
   list-style-type: none;
   justify-content: start;
 }
-.row {
-  width: 300px;
-  height: 60px;
+.SidebarList li .active {
+  width: 310px;
+  height: 62px;
   list-style-type: none;
-  margin: 0%;
+  margin: 0;
   display: flex;
   color: rgb(221, 221, 221);
-  justify-content: center;
   align-items: center;
+  text-decoration: none;
+  padding-top: 0px;
+}
+#ListComponent.active {
+  background-color: #265acc;
+  color: white;
+  text-decoration: none;
+}
+#ListComponent {
+  width: 310px;
+  height: 62px;
+  list-style-type: none;
+  margin: 0;
+  display: flex;
+  color: #265acc;
+  align-items: center;
+  text-decoration: none;
+  padding-top: 0px;
+}
+
+@media only screen and (max-width: 978px) {
+  #sidebar {
+    display: none;
+  }
+
+  .sidebar__title .CloseButton {
+    display: inline;
+    color: #265acc;
+    padding-left: 12px;
+  }
+}
+.SidebarList li {
+  width: 310px;
+  height: 62px;
+  list-style-type: none;
+  margin: 0;
+  display: flex;
+  color: rgb(221, 221, 221);
+  align-items: center;
+  text-decoration: none !important;
 }
 span {
-  margin-left: 16px;
+  padding-left: 12px;
+  text-decoration: none !important;
 }
-.side-text:hover {
-  cursor: pointer;
-  background-color: rgb(82, 82, 82);
-  width: 332px;
-}
-.side-text a {
-  text-decoration: none;
-  color: #f5f5f5;
-  font-size: 18px;
-  width: 300px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 16px 16px;
-  border-radius: 1px solid;
-  list-style-type: none;
-}
-.active {
-  background-color: rgb(3, 122, 190);
+
+.SidebarList li:hover {
+  background-color: #d6d6d6;
 }

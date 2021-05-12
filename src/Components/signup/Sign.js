@@ -1,32 +1,27 @@
-import React, {Component} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
 import {BrowserRouter as Router,Route,NavLink} from 'react-router-dom';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
+import Register from './Register';
+import LogIn from './LogIn';
 
-
-
-class Sign extends Component {
-
-  render() {
+function Sign () {
 
     return (
       <Router>
+      <h1>Welcome To Occupational Health And Safety Management</h1><br></br>
       <div className='Sign'>
         <div className='app_form'>
         <div className= "switcher">
-              <NavLink exact to='/' activeClassName='switcher_item_active' className='switcher_item'>Sign Up</NavLink>
-              <NavLink to='/SignIn' activeClassName='switcher_item_active' className='switcher_item'>Sing In</NavLink>
+              <NavLink  to='/Register' activeClassName='switcher_item_active' className='switcher_item'>Register</NavLink>
+              <NavLink to='/LogIn' activeClassName='switcher_item_active' className='switcher_item'>  Log In  </NavLink>
            </div>
-           <Route exact path='/' component={SignUp}/>
-      <Route path='/SignIn' component={SignIn}>
-      </Route>
+           <Route path='/Register' component={Register}/>
+           <Route path='/LogIn' component={LogIn}/>  
       </div>
       </div>
       </Router>
     )
   }
-}
 
-export default Sign
+export default Sign;
