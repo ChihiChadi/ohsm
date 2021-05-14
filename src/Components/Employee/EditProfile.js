@@ -5,14 +5,9 @@ import {withRouter} from 'react-router-dom';
 class EditProfile extends Component {
   constructor(props) {
     super(props)
-        this.state={
-          fullname:'',
-          phonenumber:'',
-          BirthDate:'',
-        };
+        this.state={fullname:'',phonenumber:'',BirthDate:'',};
         this.change=this.change.bind(this);
-        this.onSubmit=this.onSubmit.bind(this);
-      }
+        this.onSubmit=this.onSubmit.bind(this);}
 
   componentDidMount() {
     axios.get('/Profile/edit/'+this.props.match.params.id)
@@ -20,40 +15,25 @@ class EditProfile extends Component {
         this.setState({
           fullname: res.data.fullname,
           phonenumber: res.data.phonenumber,
-          BirthDate: res.data.BirthDate
-          
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+          BirthDate: res.data.BirthDate }); })
+      .catch((error) => { console.log(error); })}
 
   change(event){
     let target=event.target;
     let name=target.name;
     let value=target.value;
-    this.setState({
-     [name]:value
- });
-}
+    this.setState({[name]:value});}
 
   onSubmit(event) {
     event.preventDefault()
     const UserObj = {
       fullname: this.state.fullname,
       BirhDate: this.state.BirthDate,
-      phonenumber: this.state.phonenumber
-    };
-
-    axios.put('/Profile/update/'+this.props.match.params.id, UserObj)
-      .then((res) => {
+      phonenumber: this.state.phonenumber};
+    axios.put('/Profile/update/'+this.props.match.params.id, UserObj).then((res) => {
         console.log(res.data)
-        console.log('Profile successfully updated')
-      }).catch((error) => {
-        console.log(error)
-      })
-
+        console.log('Profile successfully updated') })
+      .catch((error) => {console.log(error)})
     // Redirect to Profile 
     this.props.history.push('/Profile')
   }

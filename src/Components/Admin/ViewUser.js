@@ -7,11 +7,8 @@ import '../Employee/style.css'
 const ViewUser = () => {
   const [user, setUser] = useState([
     "IdNumber","Fullname","BirthDate","gender","email","phonenumber","role","company"]);
-  // eslint-disable-next-line
   const { id } = useParams();
-  useEffect(() => {
-    loadUser();
-  }, []);
+  useEffect(() => {loadUser(id);}, []);
   const loadUser = async () => {
     const res = await axios.get('/Users/'+id);
     console.log(res.data);
@@ -31,9 +28,9 @@ const ViewUser = () => {
         <li className="list-group-item">Company: {user.company}</li>
         <Link className="btn btn-primary mr-2" to={'/Users/edit/'+user._id}>Edit</Link>
       </ul>
-      
     </div>
-    </center></div>
+    </center>
+    </div>
   );
 };
 

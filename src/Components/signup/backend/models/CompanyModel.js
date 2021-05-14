@@ -8,7 +8,7 @@ const Company = new mongoose.Schema({
 
     PhoneNumber:{type:Number},
 
-    Adress:{type:String,},
+    Adress:{type:String},
 
     Employees:[{type : mongoose.Schema.Types.ObjectId, ref: 'Users'}],
 

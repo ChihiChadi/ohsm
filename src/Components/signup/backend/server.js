@@ -7,7 +7,7 @@ const cors = require('cors');
 const cookieParser= require('cookie-parser');
 
 dotenv.config()
-mongoose.connect(process.env.DB_ACCESS,{ useUnifiedTopology: true, useNewUrlParser: true,}) 
+mongoose.connect(process.env.DB_ACCESS,{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false }) 
     .then(()=> console.log("Connected To DataBase"))
 app.use(express.json())
 app.use(cors())

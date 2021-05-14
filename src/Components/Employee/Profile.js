@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link,  useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import './style.css'
 
@@ -7,8 +7,7 @@ import './style.css'
 const Profile = () => {
   const [user, setUser] = useState([
     "IdNumber","Fullname","BirthDate","gender","email","phonenumber","role","company"]);
-  // eslint-disable-next-line
-  const { id } = useParams();
+
   useEffect(() => {
     loadUser();
   }, []);

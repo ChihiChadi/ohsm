@@ -1,21 +1,22 @@
 import React,{useState,useEffect} from 'react';
 import '../Employee/style.css';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import {Link,useParams} from 'react-router-dom';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ZoomInRoundedIcon from '@material-ui/icons/ZoomInRounded';
 
 
-const Users = props => {
-  const [users, setUsers] = useState([]);
-    
-    useEffect(() => { fetchUsers();}, []);
 
+const Users=() => {
+  const [users, setUsers] = useState([]);
+    const { id } = useParams();
+    useEffect(() => { fetchUsers();}, []);
+    useEffect(() => {deleteUser(id);}, []);
       const deleteUser= async()=>{ 
-        axios.delete('/Users/delete/'+ this.props.match.params.id).then((res) => {
-              console.log('User successfully deleted!',res.data)
-          }).catch((error) => {
+       const res= await axios.delete('/Users/delete/'+id);
+          console.log('User successfully deleted!',res.data)
+         .catch((error) => {
               console.log(error) })} 
 
     const fetchUsers = async () => {
@@ -23,7 +24,7 @@ const Users = props => {
       console.log(res.data);
       setUsers(res.data); };
 
-    return(
+  return(
         <div><center><h1>Users List</h1>
           <div className="container"> 
              <table className="table">

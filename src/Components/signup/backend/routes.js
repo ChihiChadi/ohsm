@@ -2,6 +2,7 @@ const express= require ('express');
 const router =express.Router();
 const User=require('./models/UserModel');
 const Report=require('./models/ReportModel');
+const Company=require('./models/CompanyModel');
 const bcrypt =require('bcrypt');
 const passport = require('passport');
 const passportConfig= require ('./passport');
@@ -138,7 +139,7 @@ router.get('/Users',passport.authenticate('jwt',{session : false}),async(req,res
     });   
 }});
 
-//Admin: get User
+//Admin: get User to Edit
 router.get('/Users/edit/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
   if (req.user.role==='Admin'){
     User.findById(req.params.id, (err, data) => {
@@ -184,6 +185,66 @@ router.get('/Users/:id',passport.authenticate('jwt',{session : false}),(req,res,
         res.json(data)
       }
     })}});
+
+//Admin : Companys List
+router.get('/Companys',passport.authenticate('jwt',{session : false}),async(req,res)=>{
+  if (req.user.role==='Admin'){
+  Company.find().sort({ name: -1 }).then((companys) => {
+    res.status(200).send(companys);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message || "Error Occured",
+    });
+  });   
+}});
+
+//Admin: View Company
+router.get('/Companys/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
+  if (req.user.role==='Admin'){
+    Company.findById(req.params.id, (err, data) => {
+      if (err) {
+        return next(err)
+      } else {
+        res.json(data)
+      }
+    })}});
+    
+  //Admin: get Company to Edit
+router.get('/Companys/edit/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
+  if (req.user.role==='Admin'){
+    Company.findById(req.params.id, (err, data) => {
+      if (err) {
+        return next(err)
+      } else {
+        res.json(data)
+      }
+    })}});
+
+ //Admin:Edit Company
+ router.put('/Companys/update/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
+  if (req.user.role==='Admin'){
+    Company.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.json(data)
+        console.log('User updated successfully !')
+      }
+    })}
+  });    
+
+//Admin: Delete Company
+    router.delete('/Companys/delete/:id',passport.authenticate('jwt',{session : false}),(req, res, next) => {
+      if (req.user.role==='Admin'){
+      Company.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+          return next(err);
+        } else {
+          res.status(200).json({msg: data})
+        }
+      })}
+    });    
 
 //OHSMM: Company Reports
 router.get('/IncidentReports',passport.authenticate('jwt',{session : false}),async(req,res)=>{
