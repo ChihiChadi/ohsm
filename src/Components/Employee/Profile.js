@@ -17,7 +17,8 @@ const Profile = () => {
     setUser(res.data);
   };
   return (
-    <div><center><h1>My Profile</h1>
+    <div><center><h1>My Profile</h1></center>
+    <div className="container_Big"><center>
     <div className="container">
       <ul className="list-group"><h3>My Informations:</h3>
         <li className="list-group-item">Employee ID: {user.IdNumber}</li>
@@ -30,9 +31,8 @@ const Profile = () => {
         <li className="list-group-item">Company: {user.company}</li>
         <Link className="btn btn-primary mr-2" to={'/Profile/edit/'+user._id}>Edit</Link>
       </ul>
-      
     </div>
-    </center></div>
+    </center></div></div>
   );
 };
 

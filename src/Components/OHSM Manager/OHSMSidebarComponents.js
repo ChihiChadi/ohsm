@@ -1,12 +1,11 @@
 import React from 'react';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import ErrorOutlineRoundedIcon from '@material-ui/icons/ErrorOutlineRounded';
-import EmojiObjectsRoundedIcon from '@material-ui/icons/EmojiObjectsRounded';
-import AssignmentTurnedInRoundedIcon from '@material-ui/icons/AssignmentTurnedInRounded';
 import ReportRoundedIcon from '@material-ui/icons/ReportRounded';
 import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
 import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded';
-
+import GroupRoundedIcon from '@material-ui/icons/GroupRounded';
+import PlaceRoundedIcon from '@material-ui/icons/PlaceRounded';
 
 export const OHSMSidebarComponents=[
     {
@@ -22,15 +21,15 @@ export const OHSMSidebarComponents=[
      cName: 'side-text'
     },
     {
-     title:'Risk Assessment',
-     icon:<EmojiObjectsRoundedIcon/>,
-     link:'/RiskAssessment',
+     title:'Employees',
+     icon:<GroupRoundedIcon/>,
+     link:'/Employees',
      cName: 'side-text'
     },
     {
-     title:'Tasks',
-     icon:<AssignmentTurnedInRoundedIcon/>,
-     link:'/Tasks',
+     title:'Sites',
+     icon:<PlaceRoundedIcon/>,
+     link:'/Sites',
      cName: 'side-text'
     },
     {

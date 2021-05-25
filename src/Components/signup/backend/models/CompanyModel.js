@@ -10,10 +10,14 @@ const Company = new mongoose.Schema({
 
     Adress:{type:String},
 
-    Employees:[{type : mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+    Website:{type:String},
 
-    Reports:[{type : mongoose.Schema.Types.ObjectId, ref: 'Reports'}]
+    sites:[{type : mongoose.Schema.Types.ObjectId, ref: 'Sites'}],
+
+    employees:[{type : mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+
+    reports:[{type : mongoose.Schema.Types.ObjectId, ref: 'Reports'}]
 
 });
 
-module.exports=mongoose.model('Company',Company)
+module.exports=mongoose.model('Companies',Company)

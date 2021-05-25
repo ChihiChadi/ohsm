@@ -9,6 +9,7 @@ class EditCompany extends Component {
           CompanyName:'',
           PhoneNumber:'',
           Email:'',
+          Website:'',
           Adress:'',
         };
         this.change=this.change.bind(this);
@@ -16,14 +17,14 @@ class EditCompany extends Component {
       }
 
   componentDidMount() {
-    axios.get('/Companys/edit/'+this.props.match.params.id)
+    axios.get('/CompanySettings/edit/'+this.props.match.params.id)
       .then(res => {
         this.setState({
           CompanyName: res.data.CompanyName,
           PhoneNumber: res.data.PhoneNumber,
           Email: res.data.Email,
-          Adress: res.data.Adress
-          
+          Adress: res.data.Adress,
+          Website:res.data.Website
         });
       })
       .catch((error) => {
@@ -47,9 +48,10 @@ class EditCompany extends Component {
         PhoneNumber: this.state.PhoneNumber,
         Email: this.state.Email,
         Adress: this.state.Adress,
+        Website: this.state.Website
     };
 
-    axios.put('/Companys/update/'+this.props.match.params.id, CompanyObj)
+    axios.put('/CompanySettings/update/'+this.props.match.params.id, CompanyObj)
       .then((res) => {
         console.log(res.data)
         console.log('Company successfully updated')
@@ -58,12 +60,13 @@ class EditCompany extends Component {
       })
 
     // Redirect to Companys Page 
-    this.props.history.push('/Companys')
+    this.props.history.push('/CompanySettings')
   }
 
 
   render() {
     return (
+      <div><h1>Edit Company Informations:</h1>
         <div className='form'>
             <form className='RegisterForm' onSubmit={this.onSubmit}>
 
@@ -111,10 +114,21 @@ class EditCompany extends Component {
         value={this.state.Adress} /> 
         </div>
 
+        <div className='form_field'>
+        <label className='form_label' htmlFor='Website'>Company Website :</label>
+    <input type='text'
+        required
+        id='Website'
+        placeholder="Enter The Company's Website"
+        name='Website'
+        onChange={this.change}
+        value={this.state.Website}/>
+        </div>
+
         <button className='form_field_button btn'>Update</button> 
 
     </form>
-    </div>);
+    </div></div>);
   }
 }
 export default withRouter(EditCompany);

@@ -10,7 +10,9 @@ const Report = new mongoose.Schema({
 
     phoneRB:{type:Number},
 
-    Company:{type:String},
+    companyName:{type:String},
+
+    IncidentType:{type:String, enum:['Injury','Near Miss','Property Damage','Theft']},
 
     SiteAdress:{type:String},
 

@@ -3,10 +3,14 @@
   height: 100vh;
   width: 100%;
 }
-table.table {
-  background-color: #e2e2e2;
+.table.table-bordered {
+  background-color: #ffffff;
   width: 1000px;
-  border-radius: 10px 10px 10px 10px !important;
+  border-radius: 10px !important;
+  border: 1px rgb(99, 99, 99);
+  align-self: center;
+  justify-content: center;
+  margin-left: 20px;
 }
 thead {
   border-radius: 10px !important;
@@ -27,7 +31,7 @@ ul.list-group {
   border-radius: 10px !important;
 }
 h3 {
-  color: #ffffff;
+  color: black;
   text-align: left !important;
 }
 body {
@@ -82,4 +86,42 @@ Link {
   justify-content: center;
   display: flex;
   justify-items: center;
+}
+.Add_Comp {
+  justify-items: left;
+  justify-content: left;
+  justify-self: left;
+  text-align: left !important;
+  display: flex;
+  margin-left: 50px;
+}
+
+.container_Big {
+  width: 1150px;
+  height: 150vh;
+  background-color: #fcfcfc;
+  margin-top: 15px;
+  margin-left: 15px;
+  border-radius: 10px;
+}
+
+.btn.btn-primary {
+  justify-content: left !important;
+  margin-bottom: 10px;
+}
+
+span {
+  margin-right: 7px;
+}
+.list-group-item {
+  list-style-position: inside;
+  position: relative;
+  overflow-y: scroll;
+  text-overflow: unset;
+  overflow-wrap: break-word;
+  display: inline-block;
+  width: 1000px;
+}
+.list-group-item.Details {
+  height: 400px;
 }

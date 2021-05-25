@@ -11,16 +11,13 @@ const LogIn = props=>{
     const authContext = useContext(AuthContext);
     const [message,setMessage] = useState(null);
 
-        
     const change = event =>{
         setUser({...user,[event.target.name] : event.target.value});
     };
 
     const onSubmit = event =>{
         event.preventDefault();
-        
         AuthService.login(user).then(data=>{
-            
             console.log(data);
             const { isAuthenticated,user,message} = data;
             if(isAuthenticated){
@@ -29,11 +26,9 @@ const LogIn = props=>{
                 props.history.push('/Profile');
             } 
             else{
-            setMessage(message);
-    }      });
-    
-        
-    };
+            alert("Email Or Password Wrong");
+            }});};
+
            return(
                 <div className='form'>
                 <form className='LoginForm' onSubmit={onSubmit}>

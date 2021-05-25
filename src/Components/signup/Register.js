@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link, withRouter } from 'react-router-dom';
-import './SignUp.css'
+import './SignUp.css';
+
 
 class Register extends Component{
     constructor(){
@@ -44,11 +45,8 @@ class Register extends Component{
          role:this.state.role
        }
          axios.post('http://localhost:4000/Register', registered)
-         .then(form=>console.log(form.data));
-         this.props.history.push('/LogIn');
-    
-         }
-
+         .then(form=>console.log(form.data),this.props.history.push('/LogIn'))
+         .catch(err=>alert("Email Already Exist Or Server Problem"),this.props.history.push('/Register'))};
 
     render(){
         return (
@@ -117,7 +115,7 @@ class Register extends Component{
         </select>
         </div>
         <div className='form_field'>
-        <label className='form_label' htmlFor='phonenumber'>The Company You Work For :</label>
+        <label className='form_label' htmlFor='company'>The Company You Work For :</label>
     <input type="text"
         required
         id='company'
@@ -153,8 +151,9 @@ class Register extends Component{
        <button className='form_field_button btn'>Register</button><Link to='/LogIn' className='form_name_link'> I'm Already a Member</Link>
        </div>
     </form>
+    
     </div>  
   )
-    }
+        }
 }
 export default withRouter(Register);

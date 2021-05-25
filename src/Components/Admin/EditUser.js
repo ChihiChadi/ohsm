@@ -9,6 +9,7 @@ class EditUser extends Component {
           fullname:'',
           phonenumber:'',
           BirthDate:'',
+          role:''
         };
         this.change=this.change.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
@@ -20,8 +21,8 @@ class EditUser extends Component {
         this.setState({
           fullname: res.data.fullname,
           phonenumber: res.data.phonenumber,
-          BirthDate: res.data.BirthDate
-          
+          BirthDate: res.data.BirthDate,
+          role:res.data.role
         });
       })
       .catch((error) => {
@@ -43,9 +44,9 @@ class EditUser extends Component {
     const UserObj = {
       fullname: this.state.fullname,
       BirhDate: this.state.BirthDate,
-      phonenumber: this.state.phonenumber
+      phonenumber: this.state.phonenumber,
+      role:this.state.role
     };
-
     axios.put('/Users/update/'+this.props.match.params.id, UserObj)
       .then((res) => {
         console.log(res.data)
@@ -53,7 +54,6 @@ class EditUser extends Component {
       }).catch((error) => {
         console.log(error)
       })
-
     // Redirect to User Page 
     this.props.history.push('/Users')
   }
@@ -73,6 +73,7 @@ class EditUser extends Component {
         onChange={this.change}
         value={this.state.fullname}/>
         </div>
+
         <div className='form_field'>
         <label className='form_label' htmlFor='phonenumber'>Phone Number :</label>
     <input type="number"
@@ -83,6 +84,21 @@ class EditUser extends Component {
         onChange={this.change}
         value={this.state.phonenumber}/>
         </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='role'>Your Role In The Company :</label>
+    <select
+        required
+        id='role'
+        name='role'
+        onChange={this.change}
+        value={this.state.role}>
+        <option default>Select Your Role:</option> 
+        <option value="OHSMManager">OHSM Manager</option>
+        <option value="Employee">Employee</option>
+        </select>
+        </div>
+
         <div className='form_field'>
       <label className='form_label' htmlFor='BirthDate'>Birth Date :</label>
     <input type='date'

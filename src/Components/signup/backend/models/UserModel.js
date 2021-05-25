@@ -33,7 +33,9 @@ const User = new mongoose.Schema({
         type:Date,
         default:Date.now
     },
-    reports:[{type : mongoose.Schema.Types.ObjectId, ref: 'Reports'}]
+    reports:[{type : mongoose.Schema.Types.ObjectId, ref: 'Reports'}],
+
+    risks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Risks'}]
 });
 
 User.methods.comparePassword = function(password,callback){

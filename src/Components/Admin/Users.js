@@ -27,7 +27,7 @@ const Users=() => {
   return(
         <div><center><h1>Users List</h1>
           <div className="container"> 
-             <table className="table">
+             <table className="table table-bordered">
              <thead className="thead-dark">
                <tr>
                  <th scope="col">Full Name</th>
@@ -44,9 +44,9 @@ const Users=() => {
                   <td>{user.company}</td> 
                   <td>{user.role}</td>
                   <td>{user.email}</td>
-                  <td><Link to={'/Users/'+user._id}><ZoomInRoundedIcon/></Link>
-                      <Link to={'/Users/edit/'+user._id}><EditRoundedIcon/></Link>
-                      <DeleteForeverRoundedIcon onClick={deleteUser}/></td>
+                  <td><span><Link to={'/Users/'+user._id}><ZoomInRoundedIcon/></Link></span>
+                  <span> <Link to={'/Users/edit/'+user._id}><EditRoundedIcon/></Link></span>
+                  <span> <DeleteForeverRoundedIcon onClick={deleteUser}/></span></td>
                   </tr>);
                     })}
                </tbody>

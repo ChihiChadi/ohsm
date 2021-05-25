@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React from 'react';
 
 const getStyle = (props)=>{
     let baseClass = "alert ";

@@ -1,46 +1,62 @@
-import React,{useState,useContext,} from 'react';
-import {AuthContext} from '../AuthContext';
-import './style.css';
+import React, {Component} from 'react';
+import axios from 'axios';
+import '../Employee/style.css';
 import {withRouter} from 'react-router-dom';
-import Message from '../Message';
-import ReportService from './ReportService';
 
-const AddIncidentReports = props =>{
-  const [report,setReport] = useState({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"",IncidentType:"",EmailRB:"" ,phoneRB:"",Company:"", SiteAdress:"" , Severity:"" , Report:"" ,date:"" });
-  const [message,setMessage] = useState(null);
+class AddReport extends Component{
+  constructor(){
+      super()
+      this.state={
+        ReportTitle:"" ,
+        ReportId:"" ,
+        ReportedBy:"",
+        IncidentType:"",
+        EmailRB:"" ,
+        phoneRB:"",
+        companyName:"",
+        SiteAdress:"" , 
+        Severity:"" , 
+        Report:"" ,
+        date:"" };
+      this.change=this.change.bind(this);
+      this.onSubmit=this.onSubmit.bind(this);
+    }
   
-  const authContext = useContext(AuthContext);
-  const change= event =>{
-    setReport({...report,[event.target.name] : event.target.value});
-}
+    change(event){
+      let target=event.target;
+      let name=target.name;
+      let value=target.value;
+      this.setState({
+       [name]:value
+   });
+  }
+  
+    onSubmit(event){
+     event.preventDefault()
+     const ReportObj={
+      ReportTitle:this.state.ReportTitle,
+      ReportId:this.state.ReportId,
+      ReportedBy:this.state.ReportedBy,
+      companyName:this.state.companyName,
+      IncidentType:this.state.IncidentType,
+      EmailRB:this.state.EmailRB,
+      phoneRB:this.state.phoneRB,
+      SiteAdress:this.state.SiteAdress,
+      Severity:this.state.Severity,
+      Report:this.state.Report,
+      date:this.state.date
+     }
+       axios.post('/IncidentReports/Add', ReportObj)
+       .then(form=>console.log(form.data));
+       this.props.history.push('/IncidentReports');
+       alert('Reload The Page to Upload The List');
+       }
 
-const resetForm = ()=>{
-    setReport({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"" ,EmailRB:"",IncidentType:"",phoneRB:'',Company:"", SiteAdress:"" , Severity:"", Report:"" ,date:"" });
-}
-
-const onSubmit = event =>{
-  event.preventDefault();
-  ReportService.postReport(report).then(data =>{
-      const { message } = data;
-      resetForm();
-      if(message.msgBody === "UnAuthorized"){
-          setMessage(message);
-          authContext.setUser({email : "", role : ""});
-          authContext.setIsAuthenticated(false);
-      }
-      else{
-          setMessage(message);
-          console.log(data);
-          alert('Report Sussefully Added');
-          props.history.push('/MyReports');
-      }
-  });
-}
-
+       render(){
   return(
       <div className='ReportContainer'>
-      <center><h1>Add Incident Reports</h1></center><br/>
-      <form className='ReportForm' onSubmit={onSubmit}>
+      <center><h1>Add Incident Report</h1></center><br/>
+      <form className='ReportForm' onSubmit={this.onSubmit}>
 
             <div className='form_field'>
           <label className='form_label' htmlFor='ReportTitle'>Report Title :</label>
@@ -49,7 +65,7 @@ const onSubmit = event =>{
         id='ReportTitle'
         placeholder='Enter The Report Title'
         name='ReportTitle'
-        onChange={change}/>
+        onChange={this.change}/>
         </div>
 
         <div className='form_field'>
@@ -59,7 +75,7 @@ const onSubmit = event =>{
         id='ReportId'
         placeholder='Enter The Report ID'
         name='ReportId'
-        onChange={change}/>
+        onChange={this.change}/>
         </div>
 
         <div className='form_field'>
@@ -69,7 +85,7 @@ const onSubmit = event =>{
         id='ReportedBy'
         placeholder='Enter Your Full Name'
         name='ReportedBy'
-        onChange={change}/>
+        onChange={this.change}/>
         </div>
 
         <div className='form_field'>
@@ -79,7 +95,7 @@ const onSubmit = event =>{
         id='EmailRB'
         placeholder='Enter Your Email'
         name='EmailRB'
-        onChange={change}/>
+        onChange={this.change}/>
         </div>
 
         <div className='form_field'>
@@ -89,7 +105,7 @@ const onSubmit = event =>{
         id='phoneRB'
         placeholder='Enter Your Phone Number'
         name='phoneRB'
-        onChange={change}/>
+        onChange={this.change}/>
         </div>
 
         <div className='form_field'>
@@ -99,17 +115,17 @@ const onSubmit = event =>{
         id='SiteAdress'
         name='SiteAdress'
         placeholder="Which Site"
-        onChange={change}/>
+        onChange={this.change}/>
        </div>
 
        <div className='form_field'>
-      <label className='form_label' htmlFor='Company'>Company Name :</label> 
+      <label className='form_label' htmlFor='companyName'>Company Name :</label> 
      <input type='text'
         required
-        id='Company'
-        name='Company'
+        id='companyName'
+        name='companyName'
         placeholder="Company Name"
-        onChange={change}/>
+        onChange={this.change}/>
        </div>
        
        <div className='form_field'>
@@ -118,7 +134,7 @@ const onSubmit = event =>{
         required
         id='date'
         name='date'
-        onChange={change}/>
+        onChange={this.change}/>
        </div>
 
        <div className='form_field'>
@@ -126,7 +142,7 @@ const onSubmit = event =>{
      <select
         id="IncidentType"
         name='IncidentType'
-        onChange={change}>
+        onChange={this.change}>
         <option default>Select The Type Of the Incident:</option> 
     <option value="Injury">An Injury</option>
     <option value="Near Miss">A Near Miss Incident</option>
@@ -140,7 +156,7 @@ const onSubmit = event =>{
      <select
         id="Severity"
         name='Severity'
-        onChange={change}>
+        onChange={this.change}>
         <option default>Select Severity Level:</option> 
     <option value="Critical">A Citical Incident</option>
     <option value="Major">A Major Incident</option>
@@ -155,7 +171,7 @@ const onSubmit = event =>{
         id="Report"
         name='Report'
         placeholder="Report Details"
-        onChange={change} 
+        onChange={this.change} 
         rows="13"/> 
         </div>
 
@@ -163,9 +179,8 @@ const onSubmit = event =>{
        <button className='form_field_button btn'>Submit Report</button>
        </div>
        </form>
-       {message ? <Message message={message}/> : null}
       </div>
   );
-};
+};}
 
-export default withRouter(AddIncidentReports);
+export default withRouter(AddReport);

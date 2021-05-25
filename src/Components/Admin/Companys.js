@@ -25,14 +25,17 @@ const Companys=() => {
       setCompanys(res.data); };
 
   return(
-        <div><center><h1>Users List</h1>
+        <div><center><h1>Companys List</h1></center>
+        <Link to='/Companys/Add' className="btn btn-primary">Add Company</Link>
+        <center>
           <div className="container"> 
-             <table className="table">
+             <table className="table table-bordered">
              <thead className="thead-dark">
                <tr>
                  <th scope="col">Name</th>
                  <th scope="col">Email</th>
                  <th scope="col">Phone Number</th>
+                 <th scope="col">Adress</th>
                  <th scope="col">Actions</th>
                </tr>
                </thead>
@@ -42,15 +45,16 @@ const Companys=() => {
                   <td>{company.CompanyName}</td>
                   <td>{company.Email}</td> 
                   <td>{company.PhoneNumber}</td>
-                  <td><Link to={'/Users/'+company._id}><ZoomInRoundedIcon/></Link>
-                      <Link to={'/Users/edit/'+company._id}><EditRoundedIcon/></Link>
-                      <DeleteForeverRoundedIcon onClick={deleteCompany}/></td>
+                  <td>{company.Adress}</td>
+                  <td><span><Link to={'/Companys/'+company._id}><ZoomInRoundedIcon/></Link></span>
+                  <span><Link to={'/Companys/edit/'+company._id}><EditRoundedIcon/></Link></span>
+                  <span> <DeleteForeverRoundedIcon onClick={deleteCompany}/></span></td>
                   </tr>);
                     })}
                </tbody>
              </table>  
         </div>
-        </center>
+         </center>
         </div>
     );
 }

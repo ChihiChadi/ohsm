@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
+
 import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded';
 import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
@@ -24,12 +24,7 @@ export const AdminSidebarComponents=[
     link:'/Users',
     cName:'side-text'
     },
-    { 
-     title:'Admin Settings',
-     icon:<SettingsRoundedIcon/>,
-     link:'/SettingsAdmin',
-     cName: 'side-text'
-       },
+
   
 
 ] 

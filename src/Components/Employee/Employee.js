@@ -8,6 +8,8 @@ import Profile from './Profile';
 import MyReports from './MyReports';
 import AddIncidentReports from './AddIncidentReports';
 import EditProfile from './EditProfile';
+import ViewReport from './ViewReport';
+import EditReport from './EditReport';
 
 function Employee() {
     const [sidebarOpen, setsidebarOpen] = useState(false);
@@ -24,6 +26,8 @@ return (
     <Route path="/Profile"  exact component={Profile}><Profile/></Route>
     <Route path="/AddIncidentReports" exact component={AddIncidentReports}><AddIncidentReports/></Route>
     <Route path="/MyReports" exact component={MyReports}><MyReports/></Route> 
+    <Route path="/MyReports/edit/:id" exact component={EditReport}><EditReport/></Route>
+    <Route path="/MyReports/:id" exact component={ViewReport}><ViewReport/></Route>
     <Route path="/Profile/edit/:id" exact component={EditProfile}><EditProfile/></Route>
     </Switch> 
    </Router>
