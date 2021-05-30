@@ -6,7 +6,7 @@ import Message from '../Message';
 import ReportService from './ReportService';
 
 const AddIncidentReports = props =>{
-  const [report,setReport] = useState({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"",IncidentType:"",EmailRB:"" ,phoneRB:"",Company:"", SiteAdress:"" , Severity:"" , Report:"" ,date:"" });
+  const [report,setReport] = useState({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"",IncidentType:"",EmailRB:"" ,phoneRB1:"",phoneRB2:"",Company:"", SiteAdress:"" , Severity:"" , Report:"" ,date:"" });
   const [message,setMessage] = useState(null);
   
   const authContext = useContext(AuthContext);
@@ -15,7 +15,7 @@ const AddIncidentReports = props =>{
 }
 
 const resetForm = ()=>{
-    setReport({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"" ,EmailRB:"",IncidentType:"",phoneRB:'',Company:"", SiteAdress:"" , Severity:"", Report:"" ,date:"" });
+    setReport({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"" ,EmailRB:"",IncidentType:"",phoneRB1:'',phoneRB2:'',Company:"", SiteAdress:"" , Severity:"", Report:"" ,date:"" });
 }
 
 const onSubmit = event =>{
@@ -33,6 +33,7 @@ const onSubmit = event =>{
           console.log(data);
           alert('Report Sussefully Added');
           props.history.push('/MyReports');
+          window.location.reload();
       }
   });
 }
@@ -83,12 +84,21 @@ const onSubmit = event =>{
         </div>
 
         <div className='form_field'>
-          <label className='form_label' htmlFor='phoneRB'>Phone Number :</label>
+          <label className='form_label' htmlFor='phoneRB1'>Phone Number 1 :</label>
         <input type='number'
         required
-        id='phoneRB'
-        placeholder='Enter Your Phone Number'
-        name='phoneRB'
+        id='phoneRB1'
+        placeholder='Enter Your Phone Number 1'
+        name='phoneRB1'
+        onChange={change}/>
+        </div>
+
+        <div className='form_field'>
+          <label className='form_label' htmlFor='phoneRB2'>Phone Number 2:</label>
+        <input type='number'
+        id='phoneRB2'
+        placeholder='Phone Number 2 If You Have'
+        name='phoneRB2'
         onChange={change}/>
         </div>
 

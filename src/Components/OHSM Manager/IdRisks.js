@@ -13,6 +13,15 @@ const IdRisks = props => {
     useEffect(() => {
       fetchRisks();
     }, []);
+
+    const deleteRisk= (id) => {  axios.delete('/IdRisks/delete/' +id)
+    .then((res) => {
+        console.log('Risk Successfully Deleted!')
+        alert("Risk Successfully Deleted!")
+        window.location.reload();
+    }).catch((error) => {
+        console.log(error) })}
+
     const fetchRisks = async () => {
       const res = await axios.get(`/IdRisks`);
       console.log(res.data);
@@ -41,7 +50,7 @@ const IdRisks = props => {
                 <td><span><Link to={`/IdRisks/`+risk._id}><ZoomInRoundedIcon/></Link></span>
                 <span><Link to={`/IdRisks/edit/`+risk._id}><EditRoundedIcon/></Link></span>
                 <span><Link to={`/IdRisks/`+risk._id+`/Tasks`}><BuildRoundedIcon/></Link></span>
-                <span><DeleteForeverRoundedIcon/></span>
+                <span><button className="Delete" onClick={() => { deleteRisk(risk._id) }}><DeleteForeverRoundedIcon/></button></span>
                   </td></tr>);})}
                </tbody>
              </table>  

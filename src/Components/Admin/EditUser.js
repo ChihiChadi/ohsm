@@ -7,8 +7,8 @@ class EditUser extends Component {
     super(props)
         this.state={
           fullname:'',
-          phonenumber:'',
-          BirthDate:'',
+          phonenumber1:'',
+          phonenumber2:'',
           role:''
         };
         this.change=this.change.bind(this);
@@ -20,8 +20,8 @@ class EditUser extends Component {
       .then(res => {
         this.setState({
           fullname: res.data.fullname,
-          phonenumber: res.data.phonenumber,
-          BirthDate: res.data.BirthDate,
+          phonenumber1: res.data.phonenumber1,
+          phonenumber2: res.data.phonenumber2,
           role:res.data.role
         });
       })
@@ -43,8 +43,8 @@ class EditUser extends Component {
     event.preventDefault()
     const UserObj = {
       fullname: this.state.fullname,
-      BirhDate: this.state.BirthDate,
-      phonenumber: this.state.phonenumber,
+      phonenumber1: this.state.phonenumber1,
+      phonenumber2: this.state.phonenumber2,
       role:this.state.role
     };
     axios.put('/Users/update/'+this.props.match.params.id, UserObj)
@@ -75,14 +75,24 @@ class EditUser extends Component {
         </div>
 
         <div className='form_field'>
-        <label className='form_label' htmlFor='phonenumber'>Phone Number :</label>
+        <label className='form_label' htmlFor='phonenumber1'>Phone Number 1:</label>
     <input type="number"
         required
-        id='phonenumber'
-        placeholder="Enter Your Phone Number"
-        name='phonenumber'
+        id='phonenumber1'
+        placeholder="Enter Your Phone Number #1"
+        name='phonenumber1'
         onChange={this.change}
-        value={this.state.phonenumber}/>
+        value={this.state.phonenumber1}/>
+        </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='phonenumber2'>Phone Number 2:</label>
+    <input type="number"
+        id='phonenumber2'
+        placeholder="Enter Your Phone Number"
+        name='phonenumber2'
+        onChange={this.change}
+        value={this.state.phonenumber2}/>
         </div>
 
         <div className='form_field'>
@@ -99,15 +109,7 @@ class EditUser extends Component {
         </select>
         </div>
 
-        <div className='form_field'>
-      <label className='form_label' htmlFor='BirthDate'>Birth Date :</label>
-    <input type='date'
-        required
-        id="BirthDate"
-        name='BirthDate'
-        onChange={this.change}
-        value={this.state.BirthDate} /> 
-        </div>
+        
         <button className='form_field_button btn'>Update</button>
           
         

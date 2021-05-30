@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
 class EditProfile extends Component {
   constructor(props) {
     super(props)
-        this.state={fullname:'',phonenumber:'',BirthDate:'',};
+        this.state={fullname:'',phonenumber1:'',phonenumber2:'',};
         this.change=this.change.bind(this);
         this.onSubmit=this.onSubmit.bind(this);}
 
@@ -14,8 +14,8 @@ class EditProfile extends Component {
       .then(res => {
         this.setState({
           fullname: res.data.fullname,
-          phonenumber: res.data.phonenumber,
-          BirthDate: res.data.BirthDate }); })
+          phonenumber1: res.data.phonenumber1,
+          phonenumber2: res.data.phonenumber2 }); })
       .catch((error) => { console.log(error); })}
 
   change(event){
@@ -28,8 +28,8 @@ class EditProfile extends Component {
     event.preventDefault()
     const UserObj = {
       fullname: this.state.fullname,
-      BirhDate: this.state.BirthDate,
-      phonenumber: this.state.phonenumber};
+      phonenumber1: this.state.phonenumber1,
+      phonenumber2: this.state.phonenumber2};
     axios.put('/Profile/update/'+this.props.match.params.id, UserObj).then((res) => {
         console.log(res.data)
         console.log('Profile successfully updated') })
@@ -54,23 +54,23 @@ class EditProfile extends Component {
         value={this.state.fullname}/>
         </div>
         <div className='form_field'>
-        <label className='form_label' htmlFor='phonenumber'>Phone Number :</label>
+        <label className='form_label' htmlFor='phonenumber1'>Phone Number 1:</label>
     <input type="number"
         required
-        id='phonenumber'
-        placeholder="Enter Your Phone Number"
-        name='phonenumber'
+        id='phonenumber1'
+        placeholder="Enter Your Phone Number 1"
+        name='phonenumber1'
         onChange={this.change}
         value={this.state.phonenumber}/>
         </div>
         <div className='form_field'>
-      <label className='form_label' htmlFor='BirthDate'>Birth Date :</label>
-    <input type='date'
-        required
-        id="BirthDate"
-        name='BirthDate'
+        <label className='form_label' htmlFor='phonenumber2'>Phone Number 2:</label>
+    <input type="number"
+        id='phonenumber2'
+        placeholder="Enter Your Phone Number 2"
+        name='phonenumber2'
         onChange={this.change}
-        value={this.state.BirthDate} /> 
+        value={this.state.phonenumber2}/>
         </div>
         <button className='form_field_button btn'>Update</button>
           

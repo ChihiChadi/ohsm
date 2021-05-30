@@ -7,18 +7,18 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ZoomInRoundedIcon from '@material-ui/icons/ZoomInRounded';
 import BuildRoundedIcon from '@material-ui/icons/BuildRounded';
 
-
-
 const IncidentReports = props => {
   const [reports, setReports] = useState([]);
     
     useEffect(() => { fetchReports();}, []);
 
-     /* const deleteUser=()=>{ axios.delete('/Users/delete/' + this.props.match.params.id)
+     const deleteReport= (id) => {  axios.delete('/IncidentReports/delete/' +id)
           .then((res) => {
-              console.log('User successfully deleted!')
+              console.log('Report Successfully Deleted!')
+              alert("Report Successfully Deleted!")
+              window.location.reload();
           }).catch((error) => {
-              console.log(error) })} */
+              console.log(error) })}
 
     const fetchReports = async () => {
       const res = await axios.get('/IncidentReports');
@@ -51,7 +51,7 @@ const IncidentReports = props => {
                   <td><span><Link to={'/IncidentReports/'+report._id}><ZoomInRoundedIcon/></Link></span>
                   <span><Link to={'/IncidentReports/edit/'+report._id}><EditRoundedIcon/></Link></span>
                   <span><Link to={`/IncidentReports/`+report._id+`/Tasks`}><BuildRoundedIcon/></Link></span>
-                  <span><DeleteForeverRoundedIcon /></span></td>
+                  <span><button className="Delete" onClick={() => { deleteReport(report._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}
                </tbody>
              </table>  

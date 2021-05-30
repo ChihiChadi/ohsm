@@ -16,4 +16,4 @@ const Task = new mongoose.Schema({
     
 });
 
-module.exports=mongoose.model('Sites',Site)
+module.exports=mongoose.model('Tasks',Task)

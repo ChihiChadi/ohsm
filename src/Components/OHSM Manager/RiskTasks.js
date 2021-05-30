@@ -11,11 +11,13 @@ const RiskTasks = props => {
     
     useEffect(() => { fetchRisksTasks();}, []);
 
-     /* const deleteUser=()=>{ axios.delete('/Users/delete/' + this.props.match.params.id)
+     const deleteTask=(id)=>{ axios.delete('/IdRisks/:id/Tasks/delete' + id)
           .then((res) => {
-              console.log('User successfully deleted!')
+              console.log('Task successfully deleted!')
+              alert("Task successfully deleted!")
+              window.location.reload();
           }).catch((error) => {
-              console.log(error) })} */
+              console.log(error) })} 
 
     const fetchRisksTasks = async () => {
       const res = await axios.get('/IdRisks/:id/Tasks');
@@ -23,9 +25,9 @@ const RiskTasks = props => {
       setTasks(res.data); };
 
     return(
-        <div><center><h1>Report Task List</h1></center>
+        <div><center><h1>Risk Tasks List</h1></center>
         <div className="container_Big">
-        <Link to='/IncidentReports/:id/Tasks/Add' className="btn btn-primary">Add task</Link>
+        <Link to='/IncidentReports/:id/Tasks/Add' className="btn btn-primary">Add Task</Link>
         <center>
           <div className="container"> 
              <table className="table table-bordered">
@@ -45,7 +47,7 @@ const RiskTasks = props => {
                   <td>{task.SiteAdress}</td>
                   <td><span><Link to={'/IdRisks/:id/Tasks/'+task._id}><ZoomInRoundedIcon/></Link></span>
                   <span><Link to={'/IdRisks/:id/Tasks/edit/'+task._id}><EditRoundedIcon/></Link></span>
-                  <span><DeleteForeverRoundedIcon /></span></td>
+                  <span><button className="Delete" onClick={() => { deleteTask(task._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}
                </tbody>
              </table>  

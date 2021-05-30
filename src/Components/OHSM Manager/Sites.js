@@ -11,11 +11,13 @@ const Sites = props => {
     
     useEffect(() => { fetchSites();}, []);
 
-     /* const deleteUser=()=>{ axios.delete('/Users/delete/' + this.props.match.params.id)
-          .then((res) => {
-              console.log('User successfully deleted!')
-          }).catch((error) => {
-              console.log(error) })} */
+    const deleteSite= (id) => {  axios.delete('/Sites/delete/' +id)
+    .then((res) => {
+        console.log('Site Successfully Deleted!')
+        alert("Site Successfully Deleted!")
+        window.location.reload();
+    }).catch((error) => {
+        console.log(error) })}
 
     const fetchSites= async () => {
       const res = await axios.get('/Sites');
@@ -25,7 +27,7 @@ const Sites = props => {
     return(
         <div><center><h1>Sites's List</h1></center>
         <div className="container_Big">
-        <Link to='/Sites/:id/Add' className="btn btn-primary">Add Site</Link>
+        <Link to='/Sites/Add' className="btn btn-primary">Add Site</Link>
         <center>
           <div className="container"> 
              <table className="table table-bordered">
@@ -43,11 +45,11 @@ const Sites = props => {
                  <tr key={site._id}>        
                   <td>{site.SiteName}</td>
                   <td>{site.companyN}</td> 
-                  <td>{site.Responsable}</td>
                   <td>{site.SiteAdress}</td>
+                  <td>{site.Responsable}</td>
                   <td><span><Link to={'/Sites/'+site._id}><ZoomInRoundedIcon/></Link></span>
                   <span><Link to={'/Sites/edit/'+site._id}><EditRoundedIcon/></Link></span>
-                  <span><DeleteForeverRoundedIcon /></span></td>
+                  <span><button className="Delete" onClick={() => { deleteSite(site._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}
                </tbody>
              </table>  

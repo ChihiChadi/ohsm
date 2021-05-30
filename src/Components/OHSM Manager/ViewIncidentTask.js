@@ -8,8 +8,8 @@ const ViewIncidentTask = () => {
   const [task, setTask] = useState([
     "TaskTitle","TaskId","companyName","SiteAdress","SiteType","Responsable"]);
   const { id } = useParams();
-  useEffect(() => {loadSite(id);}, []);
-  const loadSite = async () => {
+  useEffect(() => {loadTask(id);}, []);
+  const loadTask = async () => {
     const res = await axios.get('/IncidentReports/:id/Tasks/'+id);
     console.log(res.data);
     setTask(res.data);

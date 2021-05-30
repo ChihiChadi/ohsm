@@ -45,7 +45,7 @@ class AddIncidentTask extends Component{
     render(){
         return (
             <div className='ReportContainer'>
-      <center><h1>Add Risk</h1></center>
+      <center><h1>Add Task</h1></center>
             <div className='form'>
             <form className='ReportForm' onSubmit={this.onSubmit}>
             <div className='form_field'>

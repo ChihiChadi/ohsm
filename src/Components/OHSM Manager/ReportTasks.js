@@ -11,11 +11,13 @@ const ReportTasks = props => {
     
     useEffect(() => { fetchReportsTasks();}, []);
 
-     /* const deleteUser=()=>{ axios.delete('/Users/delete/' + this.props.match.params.id)
-          .then((res) => {
-              console.log('User successfully deleted!')
-          }).catch((error) => {
-              console.log(error) })} */
+    const deleteTask=(id)=>{ axios.delete('/IncidentReport/:id/Tasks/delete' + id)
+    .then((res) => {
+        console.log('Task successfully deleted!')
+        alert("Task successfully deleted!")
+        window.location.reload();
+    }).catch((error) => {
+        console.log(error) })} 
 
     const fetchReportsTasks = async () => {
       const res = await axios.get('/IncidentReports/:id/Tasks');
@@ -45,7 +47,7 @@ const ReportTasks = props => {
                   <td>{task.SiteAdress}</td>
                   <td><span><Link to={'/IncidentReports/:id/Tasks/'+task._id}><ZoomInRoundedIcon/></Link></span>
                   <span><Link to={'/IncidentReports/:id/Tasks/edit/'+task._id}><EditRoundedIcon/></Link></span>
-                  <span><DeleteForeverRoundedIcon /></span></td>
+                  <span><button className="Delete" onClick={() => { deleteTask(task._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}
                </tbody>
              </table>  

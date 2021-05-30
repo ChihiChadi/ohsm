@@ -39,8 +39,9 @@ class AddReport extends Component{
       ReportedBy:this.state.ReportedBy,
       companyName:this.state.companyName,
       IncidentType:this.state.IncidentType,
-      EmailRB:this.state.EmailRB,
-      phoneRB:this.state.phoneRB,
+      EmailRB1:this.state.EmailRB,
+      phoneRB2:this.state.phoneRB1,
+      phoneRB:this.state.phoneRB2,
       SiteAdress:this.state.SiteAdress,
       Severity:this.state.Severity,
       Report:this.state.Report,
@@ -48,8 +49,10 @@ class AddReport extends Component{
      }
        axios.post('/IncidentReports/Add', ReportObj)
        .then(form=>console.log(form.data));
+       alert('Report Added Successfully');
        this.props.history.push('/IncidentReports');
-       alert('Reload The Page to Upload The List');
+       window.location.reload();
+       
        }
 
        render(){
@@ -99,12 +102,21 @@ class AddReport extends Component{
         </div>
 
         <div className='form_field'>
-          <label className='form_label' htmlFor='phoneRB'>Phone Number :</label>
+          <label className='form_label' htmlFor='phoneRB1'>Phone Number 1:</label>
         <input type='number'
         required
         id='phoneRB'
-        placeholder='Enter Your Phone Number'
-        name='phoneRB'
+        placeholder='Your Phone Number 1'
+        name='phoneRB1'
+        onChange={this.change}/>
+        </div>
+
+        <div className='form_field'>
+          <label className='form_label' htmlFor='phoneRB2'>Phone Number 2:</label>
+        <input type='number'
+        id='phoneRB2'
+        placeholder='Phone Number 2 If You Have'
+        name='phoneRB2'
         onChange={this.change}/>
         </div>
 
@@ -158,9 +170,9 @@ class AddReport extends Component{
         name='Severity'
         onChange={this.change}>
         <option default>Select Severity Level:</option> 
-    <option value="Critical">A Citical Incident</option>
-    <option value="Major">A Major Incident</option>
-    <option value="Minor">A Minor Incident</option>
+    <option value="Critical">Citical</option>
+    <option value="Major">Major</option>
+    <option value="Minor">Minor</option>
   </select>
        </div>
 

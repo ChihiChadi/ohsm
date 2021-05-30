@@ -8,7 +8,9 @@ const Risk = new mongoose.Schema({
 
     RiskType:{type:String, enum:['Safety','Chemical','Biological','Physical','Ergonomic']},
 
-    RiskDetails:{type:String}
+    RiskDetails:{type:String},
+
+    risktasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}],
     
 });
 

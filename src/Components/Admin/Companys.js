@@ -15,7 +15,7 @@ const Companys=() => {
     useEffect(() => {deleteCompany(id);}, []);
       const deleteCompany= async()=>{ 
        const res= await axios.delete('/Companys/delete/'+id);
-          console.log('User successfully deleted!',res.data)
+          console.log('Company successfully deleted!',res.data)
          .catch((error) => {
               console.log(error) })} 
 
@@ -25,7 +25,7 @@ const Companys=() => {
       setCompanys(res.data); };
 
   return(
-        <div><center><h1>Companys List</h1></center>
+        <div><center><h1>Companies List</h1></center>
         <Link to='/Companys/Add' className="btn btn-primary">Add Company</Link>
         <center>
           <div className="container"> 

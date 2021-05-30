@@ -35,7 +35,7 @@ class AddSite extends Component{
         companyN:this.state.companyN,
         SiteAdress:this.state.SiteAdress,
         SiteType:this.state.SiteType,
-        Responsable:this.state.RiskSeverity,
+        Responsable:this.state.Responsable,
        }
          axios.post('/Sites/Add', RiskObj)
          .then(form=>console.log(form.data));
@@ -80,7 +80,7 @@ class AddSite extends Component{
        </div>
 
        <div className='form_field'>
-      <label className='form_label' htmlFor='SiteType'>Risk Type :</label> 
+      <label className='form_label' htmlFor='SiteType'>Site Type :</label> 
      <select
         id="SiteType"
         name='SiteType'

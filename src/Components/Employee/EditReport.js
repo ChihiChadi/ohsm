@@ -106,7 +106,7 @@ class EditReport extends Component {
     </div>
 
         <div className='form_field'>
-      <label className='form_label' htmlFor='Severity'>Birth Date :</label>
+      <label className='form_label' htmlFor='Severity'>Severity :</label>
       <select
         required
         id="Severity"

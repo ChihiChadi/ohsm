@@ -10,7 +10,10 @@ const User = new mongoose.Schema({
     email:{
         type:String,
     },
-    phonenumber:{
+    phonenumber1:{
+        type:Number,
+    },
+    phonenumber2:{
         type:Number,
     },
     password:{
@@ -35,7 +38,11 @@ const User = new mongoose.Schema({
     },
     reports:[{type : mongoose.Schema.Types.ObjectId, ref: 'Reports'}],
 
-    risks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Risks'}]
+    risks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Risks'}],
+
+    risktasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}],
+    
+    incidenttasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}]
 });
 
 User.methods.comparePassword = function(password,callback){

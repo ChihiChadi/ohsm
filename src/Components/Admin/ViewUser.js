@@ -6,7 +6,7 @@ import '../Employee/style.css'
 
 const ViewUser = () => {
   const [user, setUser] = useState([
-    "IdNumber","Fullname","BirthDate","gender","email","phonenumber","role","company"]);
+    "IdNumber","Fullname","BirthDate","gender","email","phonenumber1","phonenumber2","role","company"]);
   const { id } = useParams();
   useEffect(() => {loadUser(id);}, []);
   const loadUser = async () => {
@@ -24,7 +24,8 @@ const ViewUser = () => {
         <li className="list-group-item">Gender: {user.gender}</li>
         <li className="list-group-item">email: {user.email}</li>
         <li className="list-group-item">Role: {user.role}</li>
-        <li className="list-group-item">Phone Number: {user.phonenumber}</li>
+        <li className="list-group-item">Phone Number 1: {user.phonenumber1}</li>
+        <li className="list-group-item">Phone Number 2: {user.phonenumber2}</li>
         <li className="list-group-item">Company: {user.company}</li>
         <Link className="btn btn-primary mr-2" to={'/Users/edit/'+user._id}>Edit</Link>
       </ul>

@@ -8,7 +8,9 @@ const Report = new mongoose.Schema({
 
     EmailRB:{type:String},
 
-    phoneRB:{type:Number},
+    phoneRB1:{type:Number},
+
+    phoneRB2:{type:Number},
 
     companyName:{type:String},
 
@@ -17,6 +19,8 @@ const Report = new mongoose.Schema({
     SiteAdress:{type:String},
 
     Severity:{type:String , enum:['Critical','Major','Minor']},
+
+    incidenttasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}],
 
     Report:{type:String,},
 

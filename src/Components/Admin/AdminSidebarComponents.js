@@ -13,7 +13,7 @@ export const AdminSidebarComponents=[
       cName:'side-text'
     },
     {
-     title:'Companys',
+     title:'Companies',
      icon:<BusinessRoundedIcon/>,
      link:'/Companys',
      cName: 'side-text'

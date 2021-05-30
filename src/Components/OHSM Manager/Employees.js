@@ -2,20 +2,12 @@ import React,{useState,useEffect} from 'react';
 import '../Employee/style.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import EditRoundedIcon from '@material-ui/icons/EditRounded';
-import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ZoomInRoundedIcon from '@material-ui/icons/ZoomInRounded';
 
 const Employees = props => {
   const [employees, setEmployees] = useState([]);
     
     useEffect(() => { fetchEmployees();}, []);
-
-     /* const deleteUser=()=>{ axios.delete('/Users/delete/' + this.props.match.params.id)
-          .then((res) => {
-              console.log('User successfully deleted!')
-          }).catch((error) => {
-              console.log(error) })} */
 
     const fetchEmployees = async () => {
       const res = await axios.get('/Employees');
@@ -43,8 +35,7 @@ const Employees = props => {
                   <td>{employee.company}</td> 
                   <td>{employee.email}</td>
                   <td><span><Link to={'/Employees/'+employee._id}><ZoomInRoundedIcon/></Link></span>
-                  <span><Link to={'/Employees/edit/'+employee._id}><EditRoundedIcon/></Link></span>
-                  <span><DeleteForeverRoundedIcon /></span></td>
+                  </td>
                   </tr>);})}
                </tbody>
              </table>  

@@ -4,10 +4,12 @@ const User=require('./models/UserModel');
 const Report=require('./models/ReportModel');
 const Company=require('./models/CompanyModel');
 const Risk=require('./models/RiskModel');
+const Site=require('./models/SiteModel');
 const bcrypt =require('bcrypt');
 const passport = require('passport');
 const passportConfig= require ('./passport');
 const Jwt =require('jsonwebtoken');
+const nodemailer = require("nodemailer");
 
 const signToken = userID =>{
     return Jwt.sign({
@@ -119,7 +121,8 @@ router.get('/LogOut',passport.authenticate('jwt',{session : false}),(req,res)=>{
 //Employee: Add Incident Report
 router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false}),(req,res)=>{
     const report = new Report(req.body);
-    const CompanyU= Company.findOne({"CompanyName":req.body.company});
+    const CompanyU= Company.findOne({"CompanyName":req.body.companyName});
+    const Ohsm=User.findOne({"company":req.body.companyName}).where("role","OHSMManager");
     report.save(error=>{
         if(error)
             res.status(500).json({message : {msgBody : "Error", msgError: true}});
@@ -131,7 +134,9 @@ router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false})
                     res.status(500).json({message : {msgBody : "Error", msgError: true}});
                 else
                     res.status(200).json({message : {msgBody : "Successfully created report", msgError : false}});
-            });}})});
+            });}})
+    var transporter = nodemailer.createTransport()       
+          });
 
 //Employee: My Reports
 router.get('/MyReports',passport.authenticate('jwt',{session : false}),async(req,res)=>{
@@ -336,13 +341,11 @@ router.get('/IncidentReports/:id',passport.authenticate('jwt',{session : false})
 router.post('/IncidentReports/Add',passport.authenticate('jwt',{session : false}),(req,res)=>{
   if(req.user.role==='OHSMManager'){
   const report = new Report(req.body);
-  const CompanyU= Company.findOne({"CompanyName":req.body.companyName});
   report.save(error=>{
       if(error)
           res.status(500).json({message : {msgBody : "Error", msgError: true}});
       else{
           req.user.reports.push(report);
-          CompanyU.reports.push(report);
           req.user.save(error=>{
               if(error)
                   res.status(500).json({message : {msgBody : "Error", msgError: true}});
@@ -374,6 +377,18 @@ router.put('/IncidentReports/update/:id',passport.authenticate('jwt',{session : 
         }
       })
   }});
+
+  // OHSM: Delete Incident Report
+  router.delete('/IncidentReports/delete/:id',passport.authenticate('jwt',{session : false}),(req, res, next) => {
+    if (req.user.role==='OHSMManager'){
+    Report.findByIdAndRemove(req.params.id, (err, data) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json({msg: data})
+      }
+    })}
+  });
 
 //OHSM: Company Info 
 router.get('/CompanySettings',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
@@ -469,6 +484,175 @@ router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(r
       }
     })
   });
+
+  // OHSM: Delete Risk
+  router.delete('/IdRisks/delete/:id',passport.authenticate('jwt',{session : false}),(req, res, next) => {
+    if (req.user.role==='OHSMManager'){
+    Risk.findByIdAndRemove(req.params.id, (err, data) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json({msg: data})
+      }
+    })}
+  });
+
+  //OHSM: Add Risk Task
+router.post('/IdRisks/:id/Tasks/Add',passport.authenticate('jwt',{session : false}),(req,res)=>{
+  if(req.user.role==='OHSMManager'){
+  const task = new Task(req.body);
+  task.save(error=>{
+      if(error)
+          res.status(500).json({message : {msgBody : "Error", msgError: true}});
+      else{
+          req.user.risktasks.push(task);
+          req.risk.risktasks.push(task);
+          req.user.save(error=>{
+              if(error)
+                  res.status(500).json({message : {msgBody : "Error", msgError: true}});
+              else
+                  res.status(200).json({message : {msgBody : "Successfully created report", msgError : false}});
+          })}})}});
+
+
+   //OHSM: View Risk Task
+router.get('/IdRisks/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+  if (req.user.role==='OHSMManager'){
+  Risk.findById(req.params.id, (err, data) => {
+    if (err) {
+      return next(err)
+    } else {
+      res.json(data)
+    }
+  })}});
+
+  //OHSM: Edit Risk Task
+router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(req, res,next) => {
+  if (req.user.role==='OHSMManager'){
+  Risk.findById(req.params.id, (err, data) => {
+    if (err) {
+      return next(err)
+    } else {
+      res.json(data)
+    }
+  })}});
+  router.put('/IdRisks/update/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
+    Risk.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.json(data)
+        console.log('Risk updated successfully !')
+      }
+    })
+  });
+
+  // OHSM: Delete Risk Task
+  router.delete('/IdRisks/delete/:id',passport.authenticate('jwt',{session : false}),(req, res, next) => {
+    if (req.user.role==='OHSMManager'){
+    Risk.findByIdAndRemove(req.params.id, (err, data) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).json({msg: data})
+      }
+    })}
+  });
+
+//OHSMM: Company Sites
+router.get('/Sites',passport.authenticate('jwt',{session : false}),async(req,res)=>{
+  if (req.user.role==='OHSMManager')
+  {Site.find().where('companyN',req.user.company)
+  .sort({ name: -1 })
+  .then((sites) => {
+    res.status(200).send(sites);
+  })
+  .catch((err) => {
+    res.status(500).send({message: err.message || "Error Occured",});
+  });   
+}}); 
+
+//OHSM: Add Site
+router.post('/Sites/Add',passport.authenticate('jwt',{session : false}),(req,res)=>{
+  if(req.user.role==='OHSMManager'){
+    const site = new Site(req.body);
+    site.save( (err, data)=>{
+      if (err) {
+        return next(err)
+      } else {
+        res.json(data)
+      }
+    });}});
+
+
+   //OHSM: View Site
+router.get('/Sites/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+  if (req.user.role==='OHSMManager'){
+  Site.findById(req.params.id, (err, data) => {
+    if (err) {
+      return next(err)
+    } else {
+      res.json(data)
+    }
+  })}});
+
+  //OHSM: Edit Site 
+router.get('/Sites/edit/:id',passport.authenticate('jwt',{session : false}),(req, res,next) => {
+  if (req.user.role==='OHSMManager'){
+  Site.findById(req.params.id, (err, data) => {
+    if (err) {
+      return next(err)
+    } else {
+      res.json(data)
+    }
+  })}});
+  router.put('/Sites/update/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
+    Site.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.json(data)
+        console.log('Site updated successfully !')
+      }
+    })
+  });
+
+    // OHSM: Delete Site
+    router.delete('/Sites/delete/:id',passport.authenticate('jwt',{session : false}),(req, res, next) => {
+      if (req.user.role==='OHSMManager'){
+      Site.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+          return next(err);
+        } else {
+          res.status(200).json({msg: data})
+        }
+      })}
+    });
+
+  //OHSM : Employees List
+  router.get('/Employees',passport.authenticate('jwt',{session : false}),async(req,res)=>{
+    if (req.user.role==='OHSMManager')
+    {User.find().where('company',req.user.company)
+    .sort({ name: -1 })
+    .then((employees) => {
+      res.status(200).send(employees);
+    })
+    .catch((err) => {
+      res.status(500).send({message: err.message || "Error Occured",});
+    });   
+  }}); 
+    //OHSM: View Employee
+  router.get('/Employees/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+    if (req.user.role==='OHSMManager'){
+    User.findById(req.params.id, (err, data) => {
+      if (err) {
+        return next(err)
+      } else {
+        res.json(data)
+      }
+    })}});
+
+
 
     
 module.exports=router;

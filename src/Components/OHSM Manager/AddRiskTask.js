@@ -36,7 +36,7 @@ class AddRiskTask extends Component{
         TaskType:this.state.TaskType,
         TaskDetails:this.state.TaskDetails
        }
-       axios.post('/IdRisks/:id/Tasks/Add', TaskObj)
+       axios.post('/IdRisks/'+this.props.match.params.id+'/Tasks/Add', TaskObj)
        .then(form=>console.log(form.data));
        this.props.history.push('/IdRisks');
          }

@@ -10,7 +10,8 @@ class Register extends Component{
         this.state={
           fullname:'',
           email:'',
-          phonenumber:'',
+          phonenumber1:'',
+          phonenumber2:'',
           password:'',
           role:'',
           gender:'',
@@ -36,7 +37,8 @@ class Register extends Component{
        const registered={
          fullname:this.state.fullname,
          email:this.state.email,
-         phonenumber:this.state.phonenumber,
+         phonenumber1:this.state.phonenumber1,
+         phonenumber2:this.state.phonenumber2,
          password:this.state.password,
          gender:this.state.gender,
          BirthDate:this.state.BirthDate,
@@ -72,16 +74,28 @@ class Register extends Component{
         onChange={this.change}
         value={this.state.email}/>
        </div>
+
        <div className='form_field'>
-        <label className='form_label' htmlFor='phonenumber'>Phone Number :</label>
+        <label className='form_label' htmlFor='phonenumber1'>Phone Number 1 :</label>
     <input type="number"
         required
-        id='phonenumber'
-        placeholder="Enter Your Phone Number"
-        name='phonenumber'
+        id='phonenumber1'
+        placeholder="Enter Your Phone Number #1"
+        name='phonenumber1'
         onChange={this.change}
-        value={this.state.phonenumber}/>
+        value={this.state.phonenumber1}/>
         </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='phonenumber'>Phone Number 2 :</label>
+    <input type="number"
+        id='phonenumber2'
+        placeholder="Enter Your Phone Number #2"
+        name='phonenumber2'
+        onChange={this.change}
+        value={this.state.phonenumber2}/>
+        </div>
+
        <div className='form_field'>
       <label className='form_label' htmlFor='password'>Password :</label>
     <input type='password'
