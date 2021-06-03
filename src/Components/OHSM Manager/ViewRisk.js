@@ -8,6 +8,7 @@ const ViewRisk = () => {
   const [risk, setRisk] = useState([
     "RiskId","RiskName","Company","SiteAdress","RiskType","RiskSeverity","RiskDetails"]);
   const { id } = useParams();
+  // eslint-disable-next-line
   useEffect(() => {loadRisk(id);}, []);
   const loadRisk = async () => {
     const res = await axios.get('/IdRisks/'+id);

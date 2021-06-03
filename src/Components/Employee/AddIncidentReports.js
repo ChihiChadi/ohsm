@@ -2,12 +2,11 @@ import React,{useState,useContext,} from 'react';
 import {AuthContext} from '../AuthContext';
 import './style.css';
 import {withRouter} from 'react-router-dom';
-import Message from '../Message';
 import ReportService from './ReportService';
+ import emailjs from "emailjs-com";
 
 const AddIncidentReports = props =>{
-  const [report,setReport] = useState({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"",IncidentType:"",EmailRB:"" ,phoneRB1:"",phoneRB2:"",Company:"", SiteAdress:"" , Severity:"" , Report:"" ,date:"" });
-  const [message,setMessage] = useState(null);
+  const [report,setReport] = useState({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"",IncidentType:"",EmailRB:"" ,phoneRB1:"",phoneRB2:"",companyName:"", SiteAdress:"" , Severity:"" , Report:"" ,date:"" });
   
   const authContext = useContext(AuthContext);
   const change= event =>{
@@ -15,21 +14,26 @@ const AddIncidentReports = props =>{
 }
 
 const resetForm = ()=>{
-    setReport({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"" ,EmailRB:"",IncidentType:"",phoneRB1:'',phoneRB2:'',Company:"", SiteAdress:"" , Severity:"", Report:"" ,date:"" });
+    setReport({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"" ,EmailRB:"",IncidentType:"",phoneRB1:'',phoneRB2:'',companyName:"", SiteAdress:"" , Severity:"", Report:"" ,date:"" });
 }
 
 const onSubmit = event =>{
+  
   event.preventDefault();
   ReportService.postReport(report).then(data =>{
       const { message } = data;
       resetForm();
       if(message.msgBody === "UnAuthorized"){
-          setMessage(message);
           authContext.setUser({email : "", role : ""});
           authContext.setIsAuthenticated(false);
       }
       else{
-          setMessage(message);
+        emailjs.sendForm('service_yux43ia', 'template_em44kfx', event.target, 'user_pT9JJ6gwdfMYBhjiuYX2j')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
           console.log(data);
           alert('Report Sussefully Added');
           props.history.push('/MyReports');
@@ -113,11 +117,11 @@ const onSubmit = event =>{
        </div>
 
        <div className='form_field'>
-      <label className='form_label' htmlFor='Company'>Company Name :</label> 
+      <label className='form_label' htmlFor='companyName'>Company Name :</label> 
      <input type='text'
         required
-        id='Company'
-        name='Company'
+        id='companyName'
+        name='companyName'
         placeholder="Company Name"
         onChange={change}/>
        </div>
@@ -173,7 +177,6 @@ const onSubmit = event =>{
        <button className='form_field_button btn'>Submit Report</button>
        </div>
        </form>
-       {message ? <Message message={message}/> : null}
       </div>
   );
 };

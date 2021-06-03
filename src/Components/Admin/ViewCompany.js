@@ -7,6 +7,7 @@ import '../Employee/style.css'
 const ViewCompany = () => {
   const [company, setCompany] = useState(["CompanyId","CompanyName","PhoneNumber","Adress","Email","Website"]);
   const { id } = useParams();
+  // eslint-disable-next-line
   useEffect(() => {loadCompany(id);}, []);
   const loadCompany = async () => {
     const res = await axios.get('/Companys/'+id);

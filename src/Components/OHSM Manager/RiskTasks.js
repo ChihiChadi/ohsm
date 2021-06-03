@@ -11,13 +11,17 @@ const RiskTasks = props => {
     
     useEffect(() => { fetchRisksTasks();}, []);
 
-     const deleteTask=(id)=>{ axios.delete('/IdRisks/:id/Tasks/delete' + id)
+     const deleteTask=(id)=>{
+      var userselection = window.confirm("Are you sure you want to Delete this Task permanently?");
+     if (userselection === true){axios.delete('/IdRisks/:id/Tasks/delete' + id)
           .then((res) => {
               console.log('Task successfully deleted!')
               alert("Task successfully deleted!")
               window.location.reload();
           }).catch((error) => {
               console.log(error) })} 
+              else{
+                alert("The Task is not deleted!");}}
 
     const fetchRisksTasks = async () => {
       const res = await axios.get('/IdRisks/:id/Tasks');

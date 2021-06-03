@@ -46,8 +46,8 @@ return (
     <Navbar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />
     <OHSMSidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
     <Switch>
-      <Route path="/"  exact component={Profile}><Profile/></Route>
       <Route path="/Profile"  exact component={Profile}><Profile/></Route>
+      <Route path="/"  exact component={Profile}><Profile/></Route>
       <Route path="/Profile/edit/:id" exact component={EditProfile}><EditProfile/></Route>
 
       <Route path="/IdRisks" exact component={IdRisks}><IdRisks/></Route> 

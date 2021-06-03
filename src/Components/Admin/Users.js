@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import '../Employee/style.css';
 import axios from 'axios';
-import {Link,useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ZoomInRoundedIcon from '@material-ui/icons/ZoomInRounded';
@@ -10,14 +10,22 @@ import ZoomInRoundedIcon from '@material-ui/icons/ZoomInRounded';
 
 const Users=() => {
   const [users, setUsers] = useState([]);
-    const { id } = useParams();
+
     useEffect(() => { fetchUsers();}, []);
-    useEffect(() => {deleteUser(id);}, []);
-      const deleteUser= async()=>{ 
-       const res= await axios.delete('/Users/delete/'+id);
-          console.log('User successfully deleted!',res.data)
-         .catch((error) => {
-              console.log(error) })} 
+
+    const deleteUser= (id) => { 
+      var userselection = window.confirm("Are you sure you want to Delete this User permanently?");
+      if (userselection === true){
+      axios.delete('/Users/delete/' +id)
+    .then((res) => {
+        console.log('User Successfully Deleted!')
+        alert("User Successfully Deleted!")
+        window.location.reload();
+    }).catch((error) => {
+        console.log(error) })
+      }
+      else{
+           alert("The User is not deleted!");}}
 
     const fetchUsers = async () => {
       const res = await axios.get('/Users');
@@ -46,7 +54,7 @@ const Users=() => {
                   <td>{user.email}</td>
                   <td><span><Link to={'/Users/'+user._id}><ZoomInRoundedIcon/></Link></span>
                   <span> <Link to={'/Users/edit/'+user._id}><EditRoundedIcon/></Link></span>
-                  <span> <DeleteForeverRoundedIcon onClick={deleteUser}/></span></td>
+                  <span><button className="Delete" onClick={() => { deleteUser(user._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);
                     })}
                </tbody>

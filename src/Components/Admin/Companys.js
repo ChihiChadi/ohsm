@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import '../Employee/style.css';
 import axios from 'axios';
-import {Link,useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ZoomInRoundedIcon from '@material-ui/icons/ZoomInRounded';
@@ -10,14 +10,22 @@ import ZoomInRoundedIcon from '@material-ui/icons/ZoomInRounded';
 
 const Companys=() => {
   const [companys, setCompanys] = useState([]);
-    const { id } = useParams();
+
     useEffect(() => { fetchCompanys();}, []);
-    useEffect(() => {deleteCompany(id);}, []);
-      const deleteCompany= async()=>{ 
-       const res= await axios.delete('/Companys/delete/'+id);
-          console.log('Company successfully deleted!',res.data)
-         .catch((error) => {
-              console.log(error) })} 
+
+    const deleteCompany= (id) => {  
+      var userselection = window.confirm("Are you sure you want to Delete this Company permanently?");
+      if (userselection === true){
+      axios.delete('/Companys/delete/' +id)
+    .then((res) => {
+        console.log('Company Successfully Deleted!')
+        alert("Company Successfully Deleted!")
+        window.location.reload();
+    }).catch((error) => {
+        console.log(error) })}
+        else{
+          alert("The Company is not deleted!");}
+}
 
     const fetchCompanys = async () => {
       const res = await axios.get('/Companys');
@@ -48,7 +56,7 @@ const Companys=() => {
                   <td>{company.Adress}</td>
                   <td><span><Link to={'/Companys/'+company._id}><ZoomInRoundedIcon/></Link></span>
                   <span><Link to={'/Companys/edit/'+company._id}><EditRoundedIcon/></Link></span>
-                  <span> <DeleteForeverRoundedIcon onClick={deleteCompany}/></span></td>
+                  <span><button className="Delete" onClick={() => { deleteCompany(company._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);
                     })}
                </tbody>

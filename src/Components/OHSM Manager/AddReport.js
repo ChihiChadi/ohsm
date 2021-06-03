@@ -12,7 +12,8 @@ class AddReport extends Component{
         ReportedBy:"",
         IncidentType:"",
         EmailRB:"" ,
-        phoneRB:"",
+        phoneRB1:"",
+        phoneRB2:"",
         companyName:"",
         SiteAdress:"" , 
         Severity:"" , 
@@ -39,9 +40,9 @@ class AddReport extends Component{
       ReportedBy:this.state.ReportedBy,
       companyName:this.state.companyName,
       IncidentType:this.state.IncidentType,
-      EmailRB1:this.state.EmailRB,
-      phoneRB2:this.state.phoneRB1,
-      phoneRB:this.state.phoneRB2,
+      EmailRB:this.state.EmailRB,
+      phoneRB1:this.state.phoneRB1,
+      phoneRB2:this.state.phoneRB2,
       SiteAdress:this.state.SiteAdress,
       Severity:this.state.Severity,
       Report:this.state.Report,
@@ -188,7 +189,7 @@ class AddReport extends Component{
         </div>
 
         <div className='form_field'>
-       <button className='form_field_button btn'>Submit Report</button>
+       <button className='form_field_button btn'>Submit</button>
        </div>
        </form>
       </div>

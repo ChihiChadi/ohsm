@@ -8,9 +8,9 @@ class EditReport extends Component {
         this.state={
             ReportTitle:'',
             Severity:'',
-            phoneRB:'',
+            phoneRB1:'',
+            phoneRB2:'',
             report:'',
-            IncidentType:''
         };
         this.change=this.change.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
@@ -21,9 +21,9 @@ class EditReport extends Component {
       .then(res => {
         this.setState({
             ReportTitle: res.data.ReportTitle,
-            IncidentType:res.data.IncidentType,
             Severity: res.data.Severity,
-            phoneRB: res.data.phoneRB,
+            phoneRB1: res.data.phoneRB1,
+            phoneRB2: res.data.phoneRB2,
             report: res.data.report
         });
       })
@@ -45,9 +45,9 @@ class EditReport extends Component {
     event.preventDefault()
     const ReportObj = {
         ReportTitle: this.state.ReportTitle,
-        IncidentType: this.state.IncidentType,
         Severity: this.state.Severity,
-        phoneRB: this.state.phoneRB,
+        phoneRB1: this.state.phoneRB1,
+        phoneRB2: this.state.phoneRB2,
         report: this.state.report
     };
 
@@ -80,30 +80,26 @@ class EditReport extends Component {
         </div>
 
         <div className='form_field'>
-        <label className='form_label' htmlFor='phoneRB'>Phone Number :</label>
+        <label className='form_label' htmlFor='phoneRB1'>Phone Number 1:</label>
     <input type="number"
         required
-        id='phoneRB'
+        id='phoneRB1'
         placeholder="Enter Your Phone Number"
-        name='phoneRB'
+        name='phoneRB1'
         onChange={this.change}
-        value={this.state.phoneRB}/>
+        value={this.state.phoneRB1}/>
+        </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='phoneRB2'>Phone Number 2:</label>
+    <input type="number"
+        id='phoneRB'
+        placeholder="Your Phone Number If You Have One"
+        name='phoneRB2'
+        onChange={this.change}
+        value={this.state.phoneRB2}/>
         </div>
         
-        <div className='form_field'>
-      <label className='form_label' htmlFor='IncidentType'>Incident Type :</label> 
-     <select
-        id="IncidentType"
-        name='IncidentType'
-        onChange={this.change}
-        value={this.state.IncidentType} >
-        <option default>Select The Type Of the Incident:</option> 
-    <option value="Injury">An Injury</option>
-    <option value="Near Miss">A Near Miss Incident</option>
-    <option value="Property Damage">A Property Damage</option>
-    <option value="Theft">A Theft</option>
-    </select>
-    </div>
 
         <div className='form_field'>
       <label className='form_label' htmlFor='Severity'>Severity :</label>

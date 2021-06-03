@@ -7,7 +7,6 @@ class EditRisk extends Component {
     super(props)
         this.state={
             RiskName:'',
-            RiskId:'',
             Company:'',
             SiteAdress:'',
             RiskType:'',
@@ -23,7 +22,6 @@ class EditRisk extends Component {
       .then(res => {
         this.setState({
             RiskName: res.data.RiskName,
-            RiskId: res.data.RiskId,
             Company:res.data.Company,
             SiteAdress: res.data.SiteAdress,
             RiskType:res.data.RiskType,
@@ -47,7 +45,6 @@ class EditRisk extends Component {
     event.preventDefault()
     const RiskObj = {
         RiskName: this.state.RiskName,
-        RiskId: this.state.RiskId,
         Company: this.state.Company,
         SiteAdress: this.state.SiteAdress,
         RiskType:this.state.RiskType,
@@ -85,7 +82,7 @@ class EditRisk extends Component {
         </div>
 
         <div className='form_field'>
-          <label className='form_label' htmlFor='Company'>Risk Title :</label>
+          <label className='form_label' htmlFor='Company'>Company Name :</label>
     <input type='text'
         required
         id='Company'
@@ -94,18 +91,6 @@ class EditRisk extends Component {
         onChange={this.change}
         value={this.state.Company}/>
         </div>
-
-        <div className='form_field'>
-      <label className='form_label' htmlFor='RiskId'>Risk ID :</label> 
-     <input type='number'
-        required
-        id='RiskId'
-        name='RiskId'
-        placeholder="Enter The Risk's ID "
-        onChange={this.change}
-        value={this.state.RiskId}
-        />
-       </div>
 
        <div className='form_field'>
       <label className='form_label' htmlFor='RiskType'>Risk Type :</label> 
@@ -158,11 +143,12 @@ class EditRisk extends Component {
         name='RiskDetails'
         onChange={this.change}
         value={this.state.RiskDetails}
+        rows="13"
         />
         </div>
 
         <div className='form_field'>
-       <button className='form_field_button btn'>Add</button>
+       <button className='form_field_button btn'>Submit</button>
        </div>
     </form>
     </div>  

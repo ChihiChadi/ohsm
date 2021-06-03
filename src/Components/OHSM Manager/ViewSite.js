@@ -8,6 +8,7 @@ const ViewSite = () => {
   const [site, setSite] = useState([
     "SiteName","SiteId","companyN","SiteAdress","SiteType","Responsable"]);
   const { id } = useParams();
+  // eslint-disable-next-line
   useEffect(() => {loadSite(id);}, []);
   const loadSite = async () => {
     const res = await axios.get('/Sites/'+id);

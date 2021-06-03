@@ -14,5 +14,5 @@ app.use(cors())
 app.use(cookieParser());
 app.use('/',routesurls)
 app.listen(4000, () => {console.log('Express Server listening on port 4000');});
-
-
+app.use(require('express-static')('./'));
+app.use(require('body-parser').json());

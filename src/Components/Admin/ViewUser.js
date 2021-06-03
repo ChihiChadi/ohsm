@@ -8,6 +8,7 @@ const ViewUser = () => {
   const [user, setUser] = useState([
     "IdNumber","Fullname","BirthDate","gender","email","phonenumber1","phonenumber2","role","company"]);
   const { id } = useParams();
+  // eslint-disable-next-line
   useEffect(() => {loadUser(id);}, []);
   const loadUser = async () => {
     const res = await axios.get('/Users/'+id);

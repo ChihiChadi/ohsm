@@ -6,7 +6,11 @@ const Risk = new mongoose.Schema({
 
     SiteAdress:{type:String},
 
+    Company:{type:String},
+
     RiskType:{type:String, enum:['Safety','Chemical','Biological','Physical','Ergonomic']},
+
+    RiskSeverity:{type:String, enum:['Critical','Major','Minor']},
 
     RiskDetails:{type:String},
 

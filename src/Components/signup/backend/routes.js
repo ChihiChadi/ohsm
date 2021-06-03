@@ -9,7 +9,8 @@ const bcrypt =require('bcrypt');
 const passport = require('passport');
 const passportConfig= require ('./passport');
 const Jwt =require('jsonwebtoken');
-const nodemailer = require("nodemailer");
+const webpush = require('web-push');
+
 
 const signToken = userID =>{
     return Jwt.sign({
@@ -121,21 +122,20 @@ router.get('/LogOut',passport.authenticate('jwt',{session : false}),(req,res)=>{
 //Employee: Add Incident Report
 router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false}),(req,res)=>{
     const report = new Report(req.body);
-    const CompanyU= Company.findOne({"CompanyName":req.body.companyName});
+    
     const Ohsm=User.findOne({"company":req.body.companyName}).where("role","OHSMManager");
+
     report.save(error=>{
         if(error)
             res.status(500).json({message : {msgBody : "Error", msgError: true}});
         else{
             req.user.reports.push(report);
-            CompanyU.reports.push(report);
             req.user.save(error=>{
                 if(error)
                     res.status(500).json({message : {msgBody : "Error", msgError: true}});
                 else
                     res.status(200).json({message : {msgBody : "Successfully created report", msgError : false}});
-            });}})
-    var transporter = nodemailer.createTransport()       
+            });}})    
           });
 
 //Employee: My Reports

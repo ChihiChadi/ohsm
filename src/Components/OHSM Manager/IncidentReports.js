@@ -12,13 +12,22 @@ const IncidentReports = props => {
     
     useEffect(() => { fetchReports();}, []);
 
-     const deleteReport= (id) => {  axios.delete('/IncidentReports/delete/' +id)
-          .then((res) => {
-              console.log('Report Successfully Deleted!')
-              alert("Report Successfully Deleted!")
-              window.location.reload();
-          }).catch((error) => {
-              console.log(error) })}
+     const deleteReport= (id) => { 
+      var userselection = window.confirm("Are you sure you want to Delete this Report permanently?");
+     if (userselection === true){
+       axios.delete('/IncidentReports/delete/' +id)
+       .then((res) => {
+        console.log('Report Successfully Deleted!')
+        alert("Report Successfully Deleted!")
+        window.location.reload();
+    }).catch((error) => {
+        console.log(error) });
+       }
+     else{
+          alert("The Report is not deleted!");}
+     
+      
+          }
 
     const fetchReports = async () => {
       const res = await axios.get('/IncidentReports');

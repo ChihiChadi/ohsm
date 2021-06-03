@@ -104,6 +104,7 @@ class EditUser extends Component {
         onChange={this.change}
         value={this.state.role}>
         <option default>Select Your Role:</option> 
+        <option value="Admin">Admin</option>
         <option value="OHSMManager">OHSM Manager</option>
         <option value="Employee">Employee</option>
         </select>

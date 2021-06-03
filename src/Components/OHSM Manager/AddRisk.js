@@ -131,7 +131,7 @@ class AddIncidentTask extends Component{
         </div>
 
         <div className='form_field'>
-       <button className='form_field_button btn'>Add</button>
+       <button className='form_field_button btn'>Submit</button>
        </div>
     </form>
     </div>  

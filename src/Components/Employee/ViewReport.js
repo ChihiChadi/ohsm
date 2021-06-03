@@ -5,9 +5,9 @@ import '../Employee/style.css'
 
 const ViewReport = () => {
   const [report, setReport] = useState([
-    "ReportId","ReportTitle","ReportedBy","SiteAdress","Severity","EmailRB","phoneRB","Report","Company"]);
-    // eslint-disable-next-line 
+    "ReportId","ReportTitle","ReportedBy","SiteAdress","Severity","EmailRB","phoneRB1","phoneRB2","Report","Company"]);
     const { id } = useParams();
+      // eslint-disable-next-line 
   useEffect(() => {loadReport(id);}, []);
   const loadReport = async () => {
     const res = await axios.get('/MyReports/'+id);
@@ -24,7 +24,8 @@ const ViewReport = () => {
         <li className="list-group-item">Site : {report.SiteAdress}</li>
         <li className="list-group-item">Severity: {report.Severity}</li>
         <li className="list-group-item">Email : {report.EmailRB}</li>
-        <li className="list-group-item">Phone Number: {report.phoneRB}</li>
+        <li className="list-group-item">Phone Number 1: {report.phoneRB1}</li>
+        <li className="list-group-item">Phone Number 2: {report.phoneRB2}</li>
         <li className="list-group-item">Company: {report.Company}</li>
         <li className="list-group-item Details">Report Details: {report.Report}</li>
         <Link className="btn btn-primary mr-2" to={'/MyReports/edit/'+report._id}>Edit</Link>

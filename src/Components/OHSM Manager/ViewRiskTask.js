@@ -8,6 +8,7 @@ const ViewRiskTask = () => {
   const [task, setTask] = useState([
     "TaskTitle","TaskId","companyName","SiteAdress","SiteType","Responsable"]);
   const { id } = useParams();
+  // eslint-disable-next-line
   useEffect(() => {loadTask(id);}, []);
   const loadTask = async () => {
     const res = await axios.get('/IdRisks/:id/Tasks/'+id);

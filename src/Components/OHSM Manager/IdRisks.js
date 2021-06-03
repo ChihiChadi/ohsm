@@ -14,13 +14,18 @@ const IdRisks = props => {
       fetchRisks();
     }, []);
 
-    const deleteRisk= (id) => {  axios.delete('/IdRisks/delete/' +id)
+    const deleteRisk= (id) => { 
+      var userselection = window.confirm("Are you sure you want to Delete this Risk permanently?");
+      if (userselection === true){
+      axios.delete('/IdRisks/delete/' +id)
     .then((res) => {
         console.log('Risk Successfully Deleted!')
         alert("Risk Successfully Deleted!")
         window.location.reload();
     }).catch((error) => {
         console.log(error) })}
+         else{
+          alert("The Report is not deleted!");}}
 
     const fetchRisks = async () => {
       const res = await axios.get(`/IdRisks`);
@@ -34,7 +39,7 @@ const IdRisks = props => {
         <center>
           <div className="container"> 
              <table className="table table-bordered">
-             <thead className="thead-dark">
+             <thead>
                <tr>
                  <th scope="col">Risk Name</th>
                  <th scope="col">Site Adress</th>

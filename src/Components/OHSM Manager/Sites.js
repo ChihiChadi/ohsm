@@ -11,13 +11,18 @@ const Sites = props => {
     
     useEffect(() => { fetchSites();}, []);
 
-    const deleteSite= (id) => {  axios.delete('/Sites/delete/' +id)
+    const deleteSite= (id) => { 
+      var userselection = window.confirm("Are you sure you want to Delete this Site permanently?");
+      if (userselection === true){
+      axios.delete('/Sites/delete/' +id)
     .then((res) => {
         console.log('Site Successfully Deleted!')
         alert("Site Successfully Deleted!")
         window.location.reload();
     }).catch((error) => {
         console.log(error) })}
+        else{
+          alert("The Report is not deleted!");}}
 
     const fetchSites= async () => {
       const res = await axios.get('/Sites');

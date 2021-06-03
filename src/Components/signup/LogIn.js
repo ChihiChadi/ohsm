@@ -4,12 +4,12 @@ import './SignUp.css';
 import loginavatar from './login.png';
 import AuthService from '../AuthService';
 import {AuthContext} from '../AuthContext';
-import Message from '../Message';
+
 
 const LogIn = props=>{
     const [user,setUser] = useState({email: "", password : ""});
     const authContext = useContext(AuthContext);
-    const [message,setMessage] = useState(null);
+
 
     const change = event =>{
         setUser({...user,[event.target.name] : event.target.value});
@@ -19,7 +19,7 @@ const LogIn = props=>{
         event.preventDefault();
         AuthService.login(user).then(data=>{
             console.log(data);
-            const { isAuthenticated,user,message} = data;
+            const { isAuthenticated,user} = data;
             if(isAuthenticated){
                 authContext.setUser(user);
                 authContext.setIsAuthenticated(isAuthenticated);
@@ -57,7 +57,6 @@ const LogIn = props=>{
            <button className='form_field_button btn'>Log In</button><Link to='/Register' className='form_name_link'> Create an Account</Link>
            </div>
         </form>
-        {message ? <Message message={message}/> : null}
         </div>  
 )   
 }

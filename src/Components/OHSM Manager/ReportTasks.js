@@ -11,13 +11,17 @@ const ReportTasks = props => {
     
     useEffect(() => { fetchReportsTasks();}, []);
 
-    const deleteTask=(id)=>{ axios.delete('/IncidentReport/:id/Tasks/delete' + id)
+    const deleteTask=(id)=>{ 
+      var userselection = window.confirm("Are you sure you want to Delete this Task permanently?");
+     if (userselection === true){
+      axios.delete('/IncidentReport/:id/Tasks/delete' + id)
     .then((res) => {
         console.log('Task successfully deleted!')
         alert("Task successfully deleted!")
         window.location.reload();
     }).catch((error) => {
-        console.log(error) })} 
+        console.log(error) })}  else{
+          alert("The Task is not deleted!");}}
 
     const fetchReportsTasks = async () => {
       const res = await axios.get('/IncidentReports/:id/Tasks');
