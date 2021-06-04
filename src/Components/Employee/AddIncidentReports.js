@@ -28,7 +28,7 @@ const onSubmit = event =>{
           authContext.setIsAuthenticated(false);
       }
       else{
-        emailjs.sendForm('service_yux43ia', 'template_em44kfx', event.target, 'user_pT9JJ6gwdfMYBhjiuYX2j')
+      emailjs.sendForm('service_yux43ia', 'template_em44kfx', event.target, 'user_pT9JJ6gwdfMYBhjiuYX2j')
       .then((result) => {
           console.log(result.text);
       }, (error) => {
@@ -156,9 +156,9 @@ const onSubmit = event =>{
         name='Severity'
         onChange={change}>
         <option default>Select Severity Level:</option> 
-    <option value="Critical">A Citical Incident</option>
-    <option value="Major">A Major Incident</option>
-    <option value="Minor">A Minor Incident</option>
+    <option value="Critical"> Critical </option>
+    <option value="Major"> Major </option>
+    <option value="Minor"> Minor </option>
   </select>
        </div>
 

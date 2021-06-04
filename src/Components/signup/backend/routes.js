@@ -9,7 +9,8 @@ const bcrypt =require('bcrypt');
 const passport = require('passport');
 const passportConfig= require ('./passport');
 const Jwt =require('jsonwebtoken');
-const webpush = require('web-push');
+const nodemailer = require("nodemailer")
+
 
 
 const signToken = userID =>{
@@ -120,16 +121,32 @@ router.get('/LogOut',passport.authenticate('jwt',{session : false}),(req,res)=>{
 });
 
 //Employee: Add Incident Report
-router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false}),(req,res)=>{
+router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
     const report = new Report(req.body);
     
-    const Ohsm=User.findOne({"company":req.body.companyName}).where("role","OHSMManager");
+    const Ohsm=User.find({"company":req.body.companyName},{"role":"OHSMManager"}, function(err, result) {
+      if (err) throw console.log(err);
+      console.log(result.data);}); //to fix
 
+    var transport = nodemailer.createTransport({
+      host: "smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: "a919800e69052a",
+        pass: "4dbda1a8f4404e"
+      }
+    })
     report.save(error=>{
         if(error)
             res.status(500).json({message : {msgBody : "Error", msgError: true}});
         else{
             req.user.reports.push(report);
+             transport.sendMail({
+              from: req.user.email,
+              to: "ohsma11111@gmail.com",
+              subject: "Incident Report",
+              text:"New Incident Report Submitted !! Report Details : "+report})
+
             req.user.save(error=>{
                 if(error)
                     res.status(500).json({message : {msgBody : "Error", msgError: true}});
