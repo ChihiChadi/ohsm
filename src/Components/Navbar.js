@@ -1,3 +1,4 @@
+import React from 'react';
 import "./Navbar.css";
 import avatar from './avatar.svg';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';

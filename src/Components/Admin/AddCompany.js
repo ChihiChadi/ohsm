@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
+
+
+
 class AddCompany extends Component{
+  
+ 
     constructor(){
         super()
         this.state={
@@ -11,6 +16,8 @@ class AddCompany extends Component{
             PhoneNumber:'',
             Adress:'',
             Website:'',
+            lat:"",
+            lng:""
         };
         this.change=this.change.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
@@ -32,7 +39,9 @@ class AddCompany extends Component{
         Email:this.state.Email,
         PhoneNumber:this.state.PhoneNumber,
         Adress:this.state.Adress,
-        Website:this.state.Website
+        Website:this.state.Website,
+        lat:this.state.lat,
+        lng:this.state.lng
        }
          axios.post('/Companys/Add', CompanyObj)
          .then(form=>console.log(form.data));
@@ -94,12 +103,36 @@ class AddCompany extends Component{
         onChange={this.change}
         value={this.state.Website}/>
         </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='lat'>Enter The Latitude :</label>
+    <input type="number"
+        id='lat'
+        placeholder="Enter The Copmpany's Latitude "
+        name='lat'
+        onChange={this.change}
+        value={this.state.lat}/>
+        </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='lng'>Enter The Longitude :</label>
+    <input type="number"
+        id='lng'
+        placeholder="Enter The Copmpany's Longitude "
+        name='lng'
+        onChange={this.change}
+        value={this.state.lng}/>
+        </div>
+
+
+    
+    
         <div className='form_field'>
        <button className='form_field_button btn'>Add</button>
        </div>
     </form>
     </div>  
   )
-    }
-}
+    }}
+
 export default withRouter(AddCompany);

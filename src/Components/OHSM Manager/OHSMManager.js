@@ -1,3 +1,4 @@
+import React from 'react';
 import OHSMSidebar from './OHSMSidebar';
 import Navbar from '../Navbar';
 import '../Navbar.css';

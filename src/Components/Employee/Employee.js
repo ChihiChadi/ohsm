@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React,{useState} from 'react';
 import EmployeeSidebar from './EmployeeSidebar';
 import Navbar from '../Navbar';
 import '../Navbar.css';

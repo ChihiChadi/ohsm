@@ -16,7 +16,11 @@ const Company = new mongoose.Schema({
 
     employees:[{type : mongoose.Schema.Types.ObjectId, ref: 'Users'}],
 
-    reports:[{type : mongoose.Schema.Types.ObjectId, ref: 'Reports'}]
+    reports:[{type : mongoose.Schema.Types.ObjectId, ref: 'Reports'}],
+
+    lat:{type:Number},
+
+    lng:{type:Number}
 
 });
 

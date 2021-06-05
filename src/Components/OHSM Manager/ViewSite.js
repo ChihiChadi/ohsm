@@ -2,11 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link,  useParams } from "react-router-dom";
 import axios from "axios";
 import '../Employee/style.css'
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 
-const ViewSite = () => {
+
+const ViewSite  = props => {
+
+  const containerStyle = {
+    width: '1000px',
+    height: '400px'
+  };
+
   const [site, setSite] = useState([
-    "SiteName","SiteId","companyN","SiteAdress","SiteType","Responsable"]);
+    "SiteName","SiteId","companyN","SiteAdress","SiteType","Responsable","lat","lng"]);
   const { id } = useParams();
   // eslint-disable-next-line
   useEffect(() => {loadSite(id);}, []);
@@ -15,6 +23,12 @@ const ViewSite = () => {
     console.log(res.data);
     setSite(res.data);
   };
+
+  const center = {
+    lat: site.lat,
+    lng: site.lng
+  };
+
   return (
     <div><center><h1>Site Details</h1></center>
     <div className="container_Big"><center>
@@ -26,6 +40,20 @@ const ViewSite = () => {
         <li className="list-group-item">Company: {site.companyN}</li>
         <li className="list-group-item">Site Type: {site.SiteType}</li>
         <li className="list-group-item">Responsable: {site.Responsable}</li>
+        <li classname="list-group-item"> 
+        <LoadScript
+        googleMapsApiKey="AIzaSyC_HjEhcTrRODaZ9BjzIqrid8-mtdh0qhw">
+       <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={10}>
+        
+      
+      { /* Child components, such as markers, info windows, etc. */ }
+        
+      </GoogleMap>
+      </LoadScript>
+       </li>
         <Link className="btn btn-primary mr-2" to={'/Sites/edit/'+site._id}>Edit</Link>
       </ul>
     </div>

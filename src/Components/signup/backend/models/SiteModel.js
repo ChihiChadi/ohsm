@@ -1,3 +1,4 @@
+const { Double } = require('bson');
 const mongoose = require('mongoose');
 const Site = new mongoose.Schema({
     SiteName:{type:String,},
@@ -14,6 +15,10 @@ const Site = new mongoose.Schema({
     },
 
     Responsable:{type:String},
+
+    lat:{type:Number},
+
+    lng:{type:Number}
     
 });
 

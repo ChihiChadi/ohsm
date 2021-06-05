@@ -99,7 +99,7 @@ Link {
 
 .container_Big {
   width: 1150px;
-  height: 150vh;
+  height: 165vh;
   background-color: #fcfcfc;
   margin-top: 15px;
   margin-left: 15px;
@@ -126,9 +126,38 @@ span {
 .list-group-item.Details {
   height: 400px;
 }
+.list-group-item.Map {
+  width: 1000px;
+}
 
 button.Delete {
   background-color: #ffffff;
   text-decoration: none;
   border-style: none;
+}
+.AddCompForm {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  margin-top: 10px;
+  height: 100%;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 1000px;
+  max-width: 100%;
+  min-height: 480px;
+  display: inline-block;
+  padding-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+Map {
+  height: 400px;
+  width: 1000px;
 }

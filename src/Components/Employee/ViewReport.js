@@ -15,7 +15,8 @@ const ViewReport = () => {
     setReport(res.data);
   };
   return (
-    <div><center><h1>Report Informations</h1>
+    <div><center><h1>Report Informations</h1></center>
+    <div className="container_Big"><center>
     <div className="container">
       <ul className="list-group"><h3>Informations:</h3>
         <li className="list-group-item">Report ID: {report.ReportId}</li>
@@ -32,6 +33,7 @@ const ViewReport = () => {
       </ul>
     </div>
     </center>
+    </div>
     </div>
   );
 };

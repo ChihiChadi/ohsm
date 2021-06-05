@@ -1,3 +1,4 @@
+import React from 'react';
 import AdminSidebar from './AdminSidebar';
 import Navbar from '../Navbar';
 import '../Navbar.css';

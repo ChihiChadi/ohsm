@@ -1,3 +1,4 @@
+import React from 'react';
 import "../Sidebar.css";
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import {NavLink} from 'react-router-dom';
