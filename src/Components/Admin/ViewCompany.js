@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link,  useParams } from "react-router-dom";
 import axios from "axios";
 import '../Employee/style.css';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const ViewCompany = props => {
 
@@ -28,6 +28,14 @@ const center = {
     lat: company.lat,
     lng: company.lng
   };
+  const position = {
+    lat: company.lat,
+    lng: company.lng
+  }
+  
+  const onLoad = marker => {
+    console.log('marker: ', marker)
+  }
   
 
   return  ( 
@@ -50,7 +58,10 @@ const center = {
           zoom={10}>
         
       
-      { /* Child components, such as markers, info windows, etc. */ }
+        <Marker
+      onLoad={onLoad}
+      position={position}
+    />
         
       </GoogleMap>
       </LoadScript>

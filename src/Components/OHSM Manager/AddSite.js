@@ -12,7 +12,9 @@ class AddSite extends Component{
             SiteAdress:'',
             SiteType:'',
             RiskSeverity:'',
-            RiskDetails:''
+            RiskDetails:'',
+            lat:"",
+            lng:""
         };
         this.change=this.change.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
@@ -36,6 +38,8 @@ class AddSite extends Component{
         SiteAdress:this.state.SiteAdress,
         SiteType:this.state.SiteType,
         Responsable:this.state.Responsable,
+        lat:this.state.lat,
+        lng:this.state.lng
        }
          axios.post('/Sites/Add', RiskObj)
          .then(form=>console.log(form.data));
@@ -110,8 +114,27 @@ class AddSite extends Component{
         id='Responsable'
         placeholder="Enter The Site's Responsable"
         name='Responsable'
+        onChange={this.change}/>
+        </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='lat'>Enter The Latitude :</label>
+    <input type="number"
+        id='lat'
+        placeholder="Enter The Copmpany's Latitude "
+        name='lat'
         onChange={this.change}
-        />
+        value={this.state.lat}/>
+        </div>
+
+        <div className='form_field'>
+        <label className='form_label' htmlFor='lng'>Enter The Longitude :</label>
+    <input type="number"
+        id='lng'
+        placeholder="Enter The Copmpany's Longitude "
+        name='lng'
+        onChange={this.change}
+        value={this.state.lng}/>
         </div>
 
         <div className='form_field'>
