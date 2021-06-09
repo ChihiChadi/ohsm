@@ -3,7 +3,7 @@ import {AuthContext} from '../AuthContext';
 import './style.css';
 import {withRouter} from 'react-router-dom';
 import ReportService from './ReportService';
- import emailjs from "emailjs-com";
+// import emailjs from "emailjs-com";
 
 const AddIncidentReports = props =>{
   const [report,setReport] = useState({ReportTitle:"" ,ReportId:"" ,ReportedfBy:"",IncidentType:"",EmailRB:"" ,phoneRB1:"",phoneRB2:"",companyName:"", SiteAdress:"" , Severity:"" , Report:"" ,date:"" });
@@ -28,12 +28,12 @@ const onSubmit = event =>{
           authContext.setIsAuthenticated(false);
       }
       else{
-      emailjs.sendForm('service_yux43ia', 'template_em44kfx', event.target, 'user_pT9JJ6gwdfMYBhjiuYX2j')
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-      });
+      //emailjs.sendForm('service_yux43ia', 'template_em44kfx', event.target, 'user_pT9JJ6gwdfMYBhjiuYX2j')
+      //.then((result) => {
+        //  console.log(result.text);
+      //}, (error) => {
+         // console.log(error.text);
+      //});
           console.log(data);
           alert('Report Sussefully Added');
           props.history.push('/MyReports');

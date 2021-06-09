@@ -12,6 +12,7 @@ class AddIncidentTask extends Component{
             SiteAdress:'',
             RiskType:'',
             RiskSeverity:'',
+            RiskProbability:'',
             RiskDetails:''
         };
         this.change=this.change.bind(this);
@@ -36,6 +37,7 @@ class AddIncidentTask extends Component{
         SiteAdress:this.state.SiteAdress,
         RiskType:this.state.RiskType,
         RiskSeverity:this.state.RiskSeverity,
+        RiskProbability:this.state.RiskProbability,
         RiskDetails:this.state.RiskDetails
        }
          axios.post('/IdRisks/Add', RiskObj)
@@ -102,9 +104,26 @@ class AddIncidentTask extends Component{
         name='RiskSeverity'
         onChange={this.change}>
         <option default>Select Severity Level:</option> 
-    <option value="Critical">A Citical Risk</option>
-    <option value="Major">A Major Risk</option>
-    <option value="Minor">A Minor Risk</option>
+    <option value="Insignificant">An Insignificant Incident</option>
+    <option value="Minor">A Minor Incident</option>
+    <option value="Moderate">A Moderate Incident</option>
+    <option value="Major">A Major Incident</option>
+    <option value="Extreme">An Extreme Incident</option>
+  </select>
+       </div>
+
+       <div className='form_field'>
+      <label className='form_label' htmlFor='RiskProbability'>Risk Probability :</label> 
+     <select
+        id="RiskProbability"
+        name='RiskProbability'
+        onChange={this.change}>
+        <option default>Select The Type Of The Risk:</option> 
+    <option value="Unlikely ">Not Expected To Occur</option>
+    <option value="Remote">Not Expected, But Possible</option>
+    <option value="Occasional">May Occur Intermittently</option>
+    <option value="Certain">Expected To Occur Eventually</option>
+    <option value="Frequent">Likely To Occur Soon And Often</option>
   </select>
        </div>
 

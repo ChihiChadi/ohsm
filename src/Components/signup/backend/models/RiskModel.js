@@ -10,7 +10,9 @@ const Risk = new mongoose.Schema({
 
     RiskType:{type:String, enum:['Safety','Chemical','Biological','Physical','Ergonomic']},
 
-    RiskSeverity:{type:String, enum:['Critical','Major','Minor']},
+    RiskSeverity:{type:String, enum:['Insignificant','Minor','Moderate','Major','Extreme']},
+
+    RiskProbability:{type:String, enum:['Unlikely','Remote','Occasional','Certain','Frequent']},
 
     RiskDetails:{type:String},
 

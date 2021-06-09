@@ -7,11 +7,11 @@ import '../Employee/style.css'
 const ViewRiskTask = () => {
   const [task, setTask] = useState([
     "TaskTitle","TaskId","companyName","SiteAdress","SiteType","Responsable"]);
-  const { id } = useParams();
+  const { taskid,riskid } = useParams();
   // eslint-disable-next-line
-  useEffect(() => {loadTask(id);}, []);
+  useEffect(() => {loadTask(taskid);}, []);
   const loadTask = async () => {
-    const res = await axios.get('/IdRisks/:id/Tasks/'+id);
+    const res = await axios.get('/IdRisks/'+riskid+'/Tasks/'+taskid)
     console.log(res.data);
     setTask(res.data);
   };
@@ -26,7 +26,7 @@ const ViewRiskTask = () => {
         <li className="list-group-item">Company: {task.companyName}</li>
         <li className="list-group-item">Task Type: {task.TaskType}</li>
         <li className="list-group-item Details">Task Details: {task.TaskDetails}</li>
-        <Link className="btn btn-primary mr-2" to={'/IdRisks/:id/Tasks/edit/'+task._id}>Edit</Link>
+        <Link className="btn btn-primary mr-2" to={'/IdRisks/'+riskid+'/Tasks/edit/'+task._id}>Edit</Link>
       </ul>
     </div>
     </center>

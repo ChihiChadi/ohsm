@@ -9,7 +9,10 @@ const bcrypt =require('bcrypt');
 const passport = require('passport');
 const passportConfig= require ('./passport');
 const Jwt =require('jsonwebtoken');
-const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer");
+const async = require('async');
+const axios = require('axios');
+const flash = require('connect-flash');
 
 
 
@@ -123,11 +126,6 @@ router.get('/LogOut',passport.authenticate('jwt',{session : false}),(req,res)=>{
 //Employee: Add Incident Report
 router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
     const report = new Report(req.body);
-    
-    const Ohsm=User.find({"company":req.body.companyName},{"role":"OHSMManager"}, function(err, result) {
-      if (err) throw console.log(err);
-      console.log(result.data);}); //to fix
-
     var transport = nodemailer.createTransport({
       host: "smtp.mailtrap.io",
       port: 2525,
@@ -136,6 +134,11 @@ router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false})
         pass: "4dbda1a8f4404e"
       }
     })
+
+    const OHSM= await User.findOne({company:req.user.company,role:'OHSMManager'});
+    
+
+    
     report.save(error=>{
         if(error)
             res.status(500).json({message : {msgBody : "Error", msgError: true}});
@@ -143,7 +146,7 @@ router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false})
             req.user.reports.push(report);
              transport.sendMail({
               from: req.user.email,
-              to: "ohsma11111@gmail.com",
+              to: OHSM.email,
               subject: "Incident Report",
               text:"New Incident Report Submitted !! Report Details : "+report})
 
@@ -517,6 +520,7 @@ router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(r
   //OHSM: Add Risk Task
 router.post('/IdRisks/:id/Tasks/Add',passport.authenticate('jwt',{session : false}),(req,res)=>{
   if(req.user.role==='OHSMManager'){
+ //   ({_id}:req.params.id);
   const task = new Task(req.body);
   task.save(error=>{
       if(error)
@@ -531,9 +535,23 @@ router.post('/IdRisks/:id/Tasks/Add',passport.authenticate('jwt',{session : fals
                   res.status(200).json({message : {msgBody : "Successfully created report", msgError : false}});
           })}})}});
 
+//OHSM: Risk Tasks
+router.get('/IdRisks/:id/Tasks',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+  if (req.user.role==='OHSMManager'){
+    Risk.findById({_id : req.risk._id}).populate('risktasks').exec((error,document)=>{
+      if(error)
+          res.status(500).json({message : {msgBody : "Error", msgError: true}});
+      else{
+          res.status(200).send(document.risktasks);  
+      }});}});
+  
 
    //OHSM: View Risk Task
-router.get('/IdRisks/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+   router.param("id1", (req, res, next, id) => {
+    console.log("This function will be called first");
+    next();
+});
+router.get('/IdRisks/:id1/Tasks/:id2',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
   if (req.user.role==='OHSMManager'){
   Risk.findById(req.params.id, (err, data) => {
     if (err) {
@@ -669,7 +687,83 @@ router.get('/Sites/edit/:id',passport.authenticate('jwt',{session : false}),(req
       }
     })}});
 
+//OHSM: Dashboard
+router.get('/Dashboard',passport.authenticate('jwt',{session : false}),function(req,res){
+  if (req.user.role==='OHSMManager'){
+    const dashboard={};
+    const Sites={};
+    const Reports={};
+
+  async.parallel([
+    function(callback) {
+      Report.countDocuments({'companyName':req.user.company},function(err,reports){
+            if (err) return callback(err);
+            dashboard.nbReports = reports;
+            callback();
+        });
+    },
+    function(callback) {
+      User.countDocuments({'company':req.user.company},function(err,employees){
+         if (err) return callback(err);
+         dashboard.nbEmployees = employees;
+         callback();
+     });
+ },
+    function(callback) {
+      Site.countDocuments({'companyN':req.user.company},function(err,sites){
+           if (err) return callback(err);
+           dashboard.nbSites = sites;
+            callback();
+        });
+    },
+    function(callback) {
+      Site.find({'companyN':req.user.company},function(err,sites){
+           if (err) return callback(err);
+           Sites.siten = sites;
+           
+            callback();
+        });
+       },
+       function(callback) {
+        Report.find({'companyName':req.user.company},function(err,reports){
+             if (err) return callback(err);
+             Reports.reportn = reports;
+             
+              callback();
+          });
+         },
 
 
+
+], function(err) { //This function gets called after the two tasks have called their "task callbacks"
+    if (err) return next(err); //If an error occurred, we let express handle it by calling the `next` function
+    //Here `locals` will be an object with `user` and `posts` keys
+    //Example: `locals = {user: ..., posts: [...]}`
+     res.send({Sites,Reports,dashboard})
+     });}})
+
+
+//ohsm : get manager
+router.get('/ohsm',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+    User.findOne({company:req.user.company,role:'OHSMManager'}, function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        req.flash('OhsmEmail',result.email);
+        res.json(result.email);
+      }
+  })});
+
+ /* function middleware(){
+     
+       User.findOne({company:req.user.company,role:'OHSMManager'}, function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result.email);
+      }
+      
+        } )
+  };*/
     
 module.exports=router;

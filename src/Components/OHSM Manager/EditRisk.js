@@ -7,10 +7,9 @@ class EditRisk extends Component {
     super(props)
         this.state={
             RiskName:'',
-            Company:'',
-            SiteAdress:'',
             RiskType:'',
             RiskSeverity:'',
+            RiskProbability:'',
             RiskDetails:''
         };
         this.change=this.change.bind(this);
@@ -22,10 +21,9 @@ class EditRisk extends Component {
       .then(res => {
         this.setState({
             RiskName: res.data.RiskName,
-            Company:res.data.Company,
-            SiteAdress: res.data.SiteAdress,
             RiskType:res.data.RiskType,
             RiskSeverity: res.data.RiskSeverity,
+            RiskProbability: res.data.RiskProbability,
             RiskDetails:res.data.RiskDetails });})
       .catch((error) => {
         console.log(error);
@@ -45,9 +43,8 @@ class EditRisk extends Component {
     event.preventDefault()
     const RiskObj = {
         RiskName: this.state.RiskName,
-        Company: this.state.Company,
-        SiteAdress: this.state.SiteAdress,
         RiskType:this.state.RiskType,
+        RiskProbability:this.state.RiskProbability,
         RiskSeverity:this.state.RiskSeverity,
         RiskDetails:this.state.RiskDetails
     };
@@ -81,17 +78,6 @@ class EditRisk extends Component {
         value={this.state.RiskName}/>
         </div>
 
-        <div className='form_field'>
-          <label className='form_label' htmlFor='Company'>Company Name :</label>
-    <input type='text'
-        required
-        id='Company'
-        placeholder="Enter The Company's Name"
-        name='Company'
-        onChange={this.change}
-        value={this.state.Company}/>
-        </div>
-
        <div className='form_field'>
       <label className='form_label' htmlFor='RiskType'>Risk Type :</label> 
      <select
@@ -109,6 +95,22 @@ class EditRisk extends Component {
        </div>
 
        <div className='form_field'>
+      <label className='form_label' htmlFor='RiskProbability'>Risk Probability :</label> 
+     <select
+        id="RiskProbability"
+        name='RiskProbability'
+        onChange={this.change}
+        value={this.state.RiskProbability}>
+        <option default>Select The Type Of The Risk:</option> 
+    <option value="Unlikely ">Not Expected To Occur</option>
+    <option value="Remote">Not Expected, But Possible</option>
+    <option value="Occasional">May Occur Intermittently</option>
+    <option value="Certain">Expected To Occur Eventually</option>
+    <option value="Frequent">Likely To Occur Soon And Often</option>
+  </select>
+       </div>
+
+       <div className='form_field'>
       <label className='form_label' htmlFor='RiskSeverity'>Risk Severity :</label> 
      <select
         id="RiskSeverity"
@@ -116,23 +118,13 @@ class EditRisk extends Component {
         onChange={this.change}
         value={this.state.RiskSeverity}>
         <option default>Select Severity Level:</option> 
-    <option value="Critical">A Citical Incident</option>
-    <option value="Major">A Major Incident</option>
+    <option value="Insignificant">An Insignificant Incident</option>
     <option value="Minor">A Minor Incident</option>
+    <option value="Moderate">A Moderate Incident</option>
+    <option value="Major">A Major Incident</option>
+    <option value="Extreme">An Extreme Incident</option>
   </select>
        </div>
-
-        <div className='form_field'>
-      <label className='form_label' htmlFor='SiteAdress'>Site Adress :</label>
-    <input type='text'
-        required
-        id="SiteAdress"
-        name='SiteAdress'
-        placeholder="Enter The Site's Adress"
-        onChange={this.change}
-        value={this.state.SiteAdress}
-        /> 
-        </div>
 
         <div className='form_field'>
         <label className='form_label' htmlFor='RiskDetails'>Risk Details :</label>

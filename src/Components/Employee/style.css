@@ -99,7 +99,7 @@ Link {
 
 .container_Big {
   width: 1150px;
-  height: 165vh;
+  height: 195vh;
   background-color: #fcfcfc;
   margin-top: 15px;
   margin-left: 15px;
@@ -125,6 +125,9 @@ span {
 }
 .list-group-item.Details {
   height: 400px;
+}
+.list-group-item.Chart {
+  padding-left: 40px;
 }
 .list-group-item.Map {
   width: 1000px;
