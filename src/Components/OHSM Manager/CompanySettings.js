@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import '../Employee/style.css'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+//import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const CompanySettings = () => {
 
@@ -50,7 +50,13 @@ const center = {
         <li className="list-group-item">Adress: {company.Adress}</li>
         <li className="list-group-item">Website: {company.Website}</li>
         <li classname="list-group-item Map"> 
-        <LoadScript
+        <iframe title="MapTitle" src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d51093.12881227463!2d10.1548032!3d36.83479835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2slat%2Clng!5e0!3m2!1sen!2stn!4v1623667283048!5m2!1sen!2stn" 
+                width="1000"
+                height="400" 
+                style={{ border: 0 }} 
+                allowfullscreen="" 
+                loading="lazy"></iframe>
+        {/*<LoadScript
         googleMapsApiKey="AIzaSyC_HjEhcTrRODaZ9BjzIqrid8-mtdh0qhw">
        <GoogleMap
           mapContainerStyle={containerStyle}
@@ -64,7 +70,7 @@ const center = {
     />
         
       </GoogleMap>
-      </LoadScript>
+      </LoadScript>*/}
        </li>
         <Link className="btn btn-primary mr-2" to={'/CompanySettings/edit/'+company._id}>Edit</Link>
       </ul>

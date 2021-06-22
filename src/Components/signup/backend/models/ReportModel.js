@@ -20,7 +20,7 @@ const Report = new mongoose.Schema({
 
     Severity:{type:String , enum:['Critical','Major','Minor']},
 
-    incidenttasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}],
+    incidenttasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'IncidentTasks'}],
 
     Report:{type:String,},
 

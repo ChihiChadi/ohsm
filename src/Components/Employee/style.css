@@ -99,7 +99,7 @@ Link {
 
 .container_Big {
   width: 1150px;
-  height: 195vh;
+  height: 220vh;
   background-color: #fcfcfc;
   margin-top: 15px;
   margin-left: 15px;
@@ -163,4 +163,38 @@ button.Delete {
 Map {
   height: 400px;
   width: 1000px;
+}
+
+.Numbers {
+  width: 900px;
+  height: 200px;
+  display: flex;
+}
+.numbers {
+  height: 100px;
+  width: 250px;
+  background-color: #3466d1;
+  border-radius: 10px;
+  margin-left: 25px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: white;
+  text-align: left;
+  padding-left: 5px;
+}
+.num {
+  margin-left: 25px;
+  margin-top: 40px;
+  text-align: right;
+  font-size: x-large;
+}
+.Incidentchart {
+  display: flex;
+  margin-top: 150px;
+  margin-left: 0;
+  padding-left: 0px;
+  align-items: flex-start;
+  justify-content: left;
+  height: 500px;
+  width: 800px;
 }

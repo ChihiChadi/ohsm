@@ -14,7 +14,7 @@ const ReportTasks = props => {
     const deleteTask=(id)=>{ 
       var userselection = window.confirm("Are you sure you want to Delete this Task permanently?");
      if (userselection === true){
-      axios.delete('/IncidentReport/:id/Tasks/delete' + id)
+      axios.delete('/IncidentTasks/delete' + id)
     .then((res) => {
         console.log('Task successfully deleted!')
         alert("Task successfully deleted!")
@@ -49,7 +49,7 @@ const ReportTasks = props => {
                   <td>{task.TaskTitle}</td>
                   <td>{task.companyName}</td> 
                   <td>{task.SiteAdress}</td>
-                  <td><span><Link to={'/IncidentReports/:id/Tasks/'+task._id}><ZoomInRoundedIcon/></Link></span>
+                  <td><span><Link to={'/IncidentTasks/'+task._id}><ZoomInRoundedIcon/></Link></span>
                   <span><Link to={'/IncidentReports/:id/Tasks/edit/'+task._id}><EditRoundedIcon/></Link></span>
                   <span><button className="Delete" onClick={() => { deleteTask(task._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}

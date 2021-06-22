@@ -17,7 +17,7 @@ const IdRisks = props => {
     const deleteRisk= (id) => { 
       var userselection = window.confirm("Are you sure you want to Delete this Risk permanently?");
       if (userselection === true){
-      axios.delete('/IdRisks/delete/' +id)
+      axios.delete('/IdRisks/delete/'+id)
     .then((res) => {
         console.log('Risk Successfully Deleted!')
         alert("Risk Successfully Deleted!")

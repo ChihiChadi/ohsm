@@ -40,9 +40,9 @@ const User = new mongoose.Schema({
 
     risks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Risks'}],
 
-    risktasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}],
+    risktasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'RiskTasks'}],
     
-    incidenttasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}]
+    incidenttasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'IncidentTasks'}]
 });
 
 User.methods.comparePassword = function(password,callback){

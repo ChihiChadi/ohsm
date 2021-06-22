@@ -13,7 +13,7 @@ const RiskTasks = props => {
 
      const deleteTask=(id)=>{
       var userselection = window.confirm("Are you sure you want to Delete this Task permanently?");
-     if (userselection === true){axios.delete('/IdRisks/:id/Tasks/delete' + id)
+     if (userselection === true){axios.delete('/RiskTasks/delete' + id)
           .then((res) => {
               console.log('Task successfully deleted!')
               alert("Task successfully deleted!")
@@ -31,7 +31,7 @@ const RiskTasks = props => {
     return(
         <div><center><h1>Risk Tasks List</h1></center>
         <div className="container_Big">
-        <Link to='/IncidentReports/:id/Tasks/Add' className="btn btn-primary">Add Task</Link>
+        <Link to='/IdRisks/:id/Tasks/Add' className="btn btn-primary">Add Task</Link>
         <center>
           <div className="container"> 
              <table className="table table-bordered">
@@ -49,8 +49,8 @@ const RiskTasks = props => {
                   <td>{task.TaskTitle}</td>
                   <td>{task.companyName}</td> 
                   <td>{task.SiteAdress}</td>
-                  <td><span><Link to={'/IdRisks/:id/Tasks/'+task._id}><ZoomInRoundedIcon/></Link></span>
-                  <span><Link to={'/IdRisks/:id/Tasks/edit/'+task._id}><EditRoundedIcon/></Link></span>
+                  <td><span><Link to={'/RiskTasks/'+task._id}><ZoomInRoundedIcon/></Link></span>
+                  <span><Link to={'/RiskTasks/edit/'+task._id}><EditRoundedIcon/></Link></span>
                   <span><button className="Delete" onClick={() => { deleteTask(task._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}
                </tbody>

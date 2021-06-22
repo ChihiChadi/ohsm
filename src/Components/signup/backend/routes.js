@@ -4,6 +4,8 @@ const User=require('./models/UserModel');
 const Report=require('./models/ReportModel');
 const Company=require('./models/CompanyModel');
 const Risk=require('./models/RiskModel');
+const RiskTask=require('./models/RiskTaskModel');
+const IncidentTask=require('./models/IncidentTaskModel');
 const Site=require('./models/SiteModel');
 const bcrypt =require('bcrypt');
 const passport = require('passport');
@@ -25,14 +27,14 @@ const signToken = userID =>{
 
 //Register 
 router.post('/Register', async(req,res) =>{
-  
     const saltpassword = await bcrypt.genSalt()
     const securepassword = await bcrypt.hash (req.body.password, saltpassword)
     const signedupuser= new User({
         fullname:req.body.fullname,
         gender:req.body.gender,
         email:req.body.email,
-        phonenumber:req.body.phonenumber,
+        phonenumber1:req.body.phonenumber1,
+        phonenumber2:req.body.phonenumber2,
         password:securepassword, 
         role:req.body.role,
         company:req.body.company,
@@ -51,18 +53,6 @@ router.post('/Register', async(req,res) =>{
    .catch(error =>{
     res.json(error)
    })
-   Company.findOne({"CompanyName":req.body.company},(err,company)=>{
-    if(err)
-         res.status(500).json({message: {msgBody : "Error occured", msgError: true}})
-    if(!company)
-         res.status(400).json({message: {msgBody : "Company doesn't exist", msgError: true}})
-      company.employees.push(signedupuser)
-      .then(data =>{
-       res.json(data)
-})  })
-.catch(error =>{
-res.json(error)
-})
   });
 
 //LogIn
@@ -85,7 +75,7 @@ router.get("/Profile",passport.authenticate('jwt',{session : false}),async(req,r
       try {
             const profile = await User.findOne({_id : req.user._id})
               .populate("user",["fullname","BirthDate","gender","email",
-            "phonenumber","role","company"]);
+            "phonenumber1","phonenumber2","role","company"]);
             if (!profile) {
               return res.status(400).json({ msg: "there is no profile for this user" });
             }
@@ -447,17 +437,20 @@ router.get('/CompanySettings/edit/:id',passport.authenticate('jwt',{session : fa
   
   //OHSMM: Company Risks
 router.get('/IdRisks',passport.authenticate('jwt',{session : false}),async(req,res)=>{
-  if (req.user.role==='OHSMManager')
-  User.findById({_id : req.user._id}).populate('risks').exec((error,document)=>{
-    if(error)
-        res.status(500).json({message : {msgBody : "Error", msgError: true}});
-    else{
-        res.status(200).send(document.risks);  
-    }});});  
+    if (req.user.role==='OHSMManager')
+    {Risk.find().where('Company',req.user.company)
+    .sort({ name: -1 })
+    .then((risks) => {
+      res.status(200).send(risks);
+    })
+    .catch((err) => {
+      res.status(500).send({message: err.message || "Error Occured",});
+    });   
+  }});
 
 
 //OHSM: Add Risk
-router.post('/IdRisks/Add',passport.authenticate('jwt',{session : false}),(req,res)=>{
+router.post('/IdRisks/Add',passport.authenticate('jwt',{session : false}),async(req,res)=>{
   if(req.user.role==='OHSMManager'){
   const risk = new Risk(req.body);
   risk.save(error=>{
@@ -485,7 +478,7 @@ router.get('/IdRisks/:id',passport.authenticate('jwt',{session : false}),async(r
   })}});
 
   //OHSM: Edit Risk 
-router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(req, res,next) => {
+router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),async(req, res,next) => {
   if (req.user.role==='OHSMManager'){
   Risk.findById(req.params.id, (err, data) => {
     if (err) {
@@ -494,7 +487,7 @@ router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(r
       res.json(data)
     }
   })}});
-  router.put('/IdRisks/update/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
+  router.put('/IdRisks/update/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
     Risk.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) => {
       if (err) {
         return next(err);
@@ -506,7 +499,7 @@ router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(r
   });
 
   // OHSM: Delete Risk
-  router.delete('/IdRisks/delete/:id',passport.authenticate('jwt',{session : false}),(req, res, next) => {
+  router.delete('/IdRisks/delete/:id',passport.authenticate('jwt',{session : false}),async(req, res, next) => {
     if (req.user.role==='OHSMManager'){
     Risk.findByIdAndRemove(req.params.id, (err, data) => {
       if (err) {
@@ -518,16 +511,14 @@ router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(r
   });
 
   //OHSM: Add Risk Task
-router.post('/IdRisks/:id/Tasks/Add',passport.authenticate('jwt',{session : false}),(req,res)=>{
+router.post('/RiskTasks/Add',passport.authenticate('jwt',{session : false}),async(req,res)=>{
   if(req.user.role==='OHSMManager'){
- //   ({_id}:req.params.id);
-  const task = new Task(req.body);
+  const task = new RiskTask(req.body);
   task.save(error=>{
       if(error)
           res.status(500).json({message : {msgBody : "Error", msgError: true}});
       else{
           req.user.risktasks.push(task);
-          req.risk.risktasks.push(task);
           req.user.save(error=>{
               if(error)
                   res.status(500).json({message : {msgBody : "Error", msgError: true}});
@@ -538,7 +529,7 @@ router.post('/IdRisks/:id/Tasks/Add',passport.authenticate('jwt',{session : fals
 //OHSM: Risk Tasks
 router.get('/IdRisks/:id/Tasks',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
   if (req.user.role==='OHSMManager'){
-    Risk.findById({_id : req.risk._id}).populate('risktasks').exec((error,document)=>{
+    Risk.findById(req.params.id).populate('risktasks').exec((error,document)=>{
       if(error)
           res.status(500).json({message : {msgBody : "Error", msgError: true}});
       else{
@@ -546,14 +537,10 @@ router.get('/IdRisks/:id/Tasks',passport.authenticate('jwt',{session : false}),a
       }});}});
   
 
-   //OHSM: View Risk Task
-   router.param("id1", (req, res, next, id) => {
-    console.log("This function will be called first");
-    next();
-});
-router.get('/IdRisks/:id1/Tasks/:id2',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+//OHSM: View Risk Task
+router.get('/RiskTasks/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
   if (req.user.role==='OHSMManager'){
-  Risk.findById(req.params.id, (err, data) => {
+  RiskTask.findById(req.params.id, (err, data) => {
     if (err) {
       return next(err)
     } else {
@@ -562,30 +549,30 @@ router.get('/IdRisks/:id1/Tasks/:id2',passport.authenticate('jwt',{session : fal
   })}});
 
   //OHSM: Edit Risk Task
-router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(req, res,next) => {
+router.get('/RiskTasks/edit/:id',passport.authenticate('jwt',{session : false}),async(req, res,next) => {
   if (req.user.role==='OHSMManager'){
-  Risk.findById(req.params.id, (err, data) => {
+  RiskTask.findById(req.params.id, (err, data) => {
     if (err) {
       return next(err)
     } else {
       res.json(data)
     }
   })}});
-  router.put('/IdRisks/update/:id',passport.authenticate('jwt',{session : false}),(req,res,next)=>{
-    Risk.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) => {
+  router.put('/RiskTasks/update/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+    RiskTask.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) => {
       if (err) {
         return next(err);
       } else {
         res.json(data)
-        console.log('Risk updated successfully !')
+        console.log('Task updated successfully !')
       }
     })
   });
 
   // OHSM: Delete Risk Task
-  router.delete('/IdRisks/delete/:id',passport.authenticate('jwt',{session : false}),(req, res, next) => {
+  router.delete('/RiskTasks/delete/:id',passport.authenticate('jwt',{session : false}),async(req, res, next) => {
     if (req.user.role==='OHSMManager'){
-    Risk.findByIdAndRemove(req.params.id, (err, data) => {
+    RiskTask.findByIdAndRemove(req.params.id, (err, data) => {
       if (err) {
         return next(err);
       } else {
@@ -593,6 +580,79 @@ router.get('/IdRisks/edit/:id',passport.authenticate('jwt',{session : false}),(r
       }
     })}
   });
+
+  //OHSM: Add Incident Task
+  router.post('/IncidentReports/:id/Tasks/Add',passport.authenticate('jwt',{session : false}),async(req,res)=>{
+    if(req.user.role==='OHSMManager'){
+    const report= await Report.findById(req.params.id);
+    const task = new IncidentTask(req.body);
+    task.save(error=>{
+        if(error)
+            res.status(500).json({message : {msgBody : "Error", msgError: true}});
+        else{
+            req.user.incidenttasks.push(task);
+            report.incidenttasks.push(task);
+            req.user.save(error=>{
+                if(error)
+                    res.status(500).json({message : {msgBody : "Error", msgError: true}});
+                else
+                    res.status(200).json({message : {msgBody : "Successfully created report", msgError : false}});
+            })}})}});
+  
+  //OHSM: Incident Tasks
+  router.get('/IncidentReports/:id/Tasks',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+    if (req.user.role==='OHSMManager'){
+      Report.findById(req.params.id).populate('incidenttasks').exec((error,document)=>{
+        if(error)
+            res.status(500).json({message : {msgBody : "Error", msgError: true}});
+        else{
+            res.status(200).send(document.incidenttasks);  
+        }});}});
+    
+  
+  //OHSM: View Incident Task
+  router.get('/IncidentTasks/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+    if (req.user.role==='OHSMManager'){
+    IncidentTask.findById(req.params.id, (err, data) => {
+      if (err) {
+        return next(err)
+      } else {
+        res.json(data)
+      }
+    })}});
+  
+    //OHSM: Edit Incident Task
+  router.get('/IncidentTasks/edit/:id',passport.authenticate('jwt',{session : false}),async(req, res,next) => {
+    if (req.user.role==='OHSMManager'){
+      IncidentTask.findById(req.params.id, (err, data) => {
+      if (err) {
+        return next(err)
+      } else {
+        res.json(data)
+      }
+    })}});
+    router.put('/IncidentTasks/update/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+      IncidentTask.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) => {
+        if (err) {
+          return next(err);
+        } else {
+          res.json(data)
+          console.log('Task updated successfully !')
+        }
+      })
+    });
+  
+    // OHSM: Delete Risk Task
+    router.delete('/IncidentTasks/delete/:id',passport.authenticate('jwt',{session : false}),async(req, res, next) => {
+      if (req.user.role==='OHSMManager'){
+        IncidentTask.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+          return next(err);
+        } else {
+          res.status(200).json({msg: data})
+        }
+      })}
+    });  
 
 //OHSMM: Company Sites
 router.get('/Sites',passport.authenticate('jwt',{session : false}),async(req,res)=>{
@@ -688,7 +748,7 @@ router.get('/Sites/edit/:id',passport.authenticate('jwt',{session : false}),(req
     })}});
 
 //OHSM: Dashboard
-router.get('/Dashboard',passport.authenticate('jwt',{session : false}),function(req,res){
+router.get('/Dashboard1',passport.authenticate('jwt',{session : false}),function(req,res){
   if (req.user.role==='OHSMManager'){
     const dashboard={};
     const Sites={};
@@ -715,32 +775,43 @@ router.get('/Dashboard',passport.authenticate('jwt',{session : false}),function(
            dashboard.nbSites = sites;
             callback();
         });
-    },
-    function(callback) {
-      Site.find({'companyN':req.user.company},function(err,sites){
-           if (err) return callback(err);
-           Sites.siten = sites;
-           
-            callback();
-        });
-       },
-       function(callback) {
-        Report.find({'companyName':req.user.company},function(err,reports){
+    }
+
+], function(err) { 
+    if (err) return next(err); 
+     res.send(dashboard)
+     });}})
+
+router.get('/Dashboard2',passport.authenticate('jwt',{session : false}),function(req,res){
+  if (req.user.role==='OHSMManager'){
+    const Sites={};
+    async.parallel([
+      function(callback) {
+        Site.find({'companyN':req.user.company},function(err,sites){
              if (err) return callback(err);
-             Reports.reportn = reports;
-             
+             Sites.siten = sites;
               callback();
           });
-         },
+         }
+], function(err) { 
+          if (err) return next(err); 
+           res.send(Sites)
+           });}})
 
-
-
-], function(err) { //This function gets called after the two tasks have called their "task callbacks"
-    if (err) return next(err); //If an error occurred, we let express handle it by calling the `next` function
-    //Here `locals` will be an object with `user` and `posts` keys
-    //Example: `locals = {user: ..., posts: [...]}`
-     res.send({Sites,Reports,dashboard})
-     });}})
+ router.get('/Dashboard3',passport.authenticate('jwt',{session : false}),function(req,res){
+     if (req.user.role==='OHSMManager'){
+        const Reports={};
+       async.parallel([
+        function(callback) {
+          Report.find({'companyName':req.user.company},function(err,reports){
+               if (err) return callback(err);
+               Reports.reportn = reports;
+                callback();
+            });
+           },
+        ], function(err) { 
+             if (err) return next(err); 
+              res.send(Reports)  });}})       
 
 
 //ohsm : get manager

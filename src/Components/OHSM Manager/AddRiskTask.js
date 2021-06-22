@@ -7,6 +7,7 @@ class AddRiskTask extends Component{
         super()
         this.state={
             TaskTitle:'',
+            RiskTitle:'',
             TaskId:'',
             companyName:'',
             SiteAdress:'',
@@ -30,13 +31,14 @@ class AddRiskTask extends Component{
        event.preventDefault()
        const TaskObj={
         TaskTitle:this.state.TaskTitle,
+        RiskTitle:this.state.RiskTitle,
         TaskId:this.state.RiskId,
         companyName:this.state.companyName,
         SiteAdress:this.state.SiteAdress,
         TaskType:this.state.TaskType,
         TaskDetails:this.state.TaskDetails
        }
-       axios.post('/IdRisks/'+this.props.match.params.id+'/Tasks/Add', TaskObj)
+       axios.post('/RiskTasks/Add', TaskObj)
        .then(form=>console.log(form.data));
        this.props.history.push('/IdRisks');
          }
@@ -45,7 +47,7 @@ class AddRiskTask extends Component{
     render(){
         return (
             <div className='ReportContainer'>
-      <center><h1>Add Risk</h1></center>
+      <center><h1>Add Task</h1></center>
             <div className='form'>
             <form className='ReportForm' onSubmit={this.onSubmit}>
             <div className='form_field'>
@@ -55,6 +57,16 @@ class AddRiskTask extends Component{
         id='TaskTitle'
         placeholder="Enter The Task's Title"
         name='TaskTitle'
+        onChange={this.change}/>
+        </div>
+
+        <div className='form_field'>
+          <label className='form_label' htmlFor='RiskTitle'>Risk Title :</label>
+    <input type='text'
+        required
+        id='RiskTitle'
+        placeholder="Enter The Task's Title"
+        name='RiskTitle'
         onChange={this.change}/>
         </div>
 
@@ -91,18 +103,6 @@ class AddRiskTask extends Component{
   </select>
        </div>
 
-       <div className='form_field'>
-      <label className='form_label' htmlFor='RiskSeverity'>Risk Severity :</label> 
-     <select
-        id="RiskSeverity"
-        name='RiskSeverity'
-        onChange={this.change}>
-        <option default>Select Severity Level:</option> 
-    <option value="Critical">A Citical Risk</option>
-    <option value="Major">A Major Risk</option>
-    <option value="Minor">A Minor Risk</option>
-  </select>
-       </div>
 
         <div className='form_field'>
       <label className='form_label' htmlFor='SiteAdress'>Site Adress :</label>

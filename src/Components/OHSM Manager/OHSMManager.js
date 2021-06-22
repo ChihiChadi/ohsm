@@ -53,12 +53,13 @@ return (
 
       <Route path="/IdRisks" exact component={IdRisks}><IdRisks/></Route> 
       <Route path="/IdRisks/Add" exact component={AddRisk}><AddRisk/></Route> 
+      <Route path="/IdRisks/:id" exact component={ViewRisk}><ViewRisk/></Route>
       <Route path="/IdRisks/edit/:id" exact component={EditRisk}><EditRisk/></Route> 
       <Route path="/IdRisks/:id/Tasks" exact component={RiskTasks}><RiskTasks/></Route>
       <Route path="/IdRisks/:id/Tasks/Add" exact component={AddRiskTask}><AddRiskTask/></Route>
-      <Route path="/IdRisks/:id/Tasks/:id" exact component={ViewRiskTask}><ViewRiskTask/></Route>
-      <Route path="/IdRisks/:id/Tasks/edit/:id" exact component={EditRiskTask}><EditRiskTask/></Route>
-      <Route path="/IdRisks/:id" exact component={ViewRisk}><ViewRisk/></Route>
+      <Route path="/RiskTasks/:id" exact component={ViewRiskTask}><ViewRiskTask/></Route>
+      <Route path="/RiskTasks/edit/:id" exact component={EditRiskTask}><EditRiskTask/></Route>
+      
 
       <Route path="/Employees" exact component={Employees}><Employees/></Route>
       <Route path="/Employees/:id" exact component={ViewEmployee}><ViewEmployee/></Route>
@@ -72,9 +73,9 @@ return (
       <Route path="/IncidentReports/Add" exact component={AddReport}><AddReport/></Route>
       <Route path="/IncidentReports/edit/:id" exact component={EditReport}><EditReport/></Route>
       <Route path="/IncidentReports/:id/Tasks" exact component={ReportTasks}><ReportTasks/></Route>
-      <Route path="/IncidentReports/:id/Tasks/Add" exact component={AddIncidentTask}><AddIncidentTask/></Route>
-      <Route path="/IncidentReports/:id/Tasks/:id" exact component={ViewIncidentTask}><ViewIncidentTask/></Route>
-      <Route path="/IncidentReports/:id/Tasks/edit/:id" exact component={EditIncidentTask}><EditIncidentTask/></Route>
+      <Route path="/IncidentTasks/Add" exact component={AddIncidentTask}><AddIncidentTask/></Route>
+      <Route path="/IncidentTasks/:id" exact component={ViewIncidentTask}><ViewIncidentTask/></Route>
+      <Route path="/IncidentTasks/edit/:id" exact component={EditIncidentTask}><EditIncidentTask/></Route>
       <Route path="/IncidentReports/:id" exact component={ViewReport}><ViewReport/></Route>
 
       <Route path="/Dashboard" exact component={Dashboard}><Dashboard/></Route>

@@ -16,7 +16,7 @@ const Risk = new mongoose.Schema({
 
     RiskDetails:{type:String},
 
-    risktasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'Tasks'}],
+    risktasks:[{type : mongoose.Schema.Types.ObjectId, ref: 'RiskTasks'}],
     
 });
 

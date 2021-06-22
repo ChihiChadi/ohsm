@@ -61,7 +61,7 @@ class EditProfile extends Component {
         placeholder="Enter Your Phone Number 1"
         name='phonenumber1'
         onChange={this.change}
-        value={this.state.phonenumber}/>
+        value={this.state.phonenumber1}/>
         </div>
         <div className='form_field'>
         <label className='form_label' htmlFor='phonenumber2'>Phone Number 2:</label>

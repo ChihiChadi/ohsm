@@ -7,6 +7,7 @@ class AddIncidentTask extends Component{
         super()
         this.state={
             TaskTitle:'',
+            IncidentTitle:'',
             TaskId:'',
             companyName:'',
             SiteAdress:'',
@@ -30,6 +31,7 @@ class AddIncidentTask extends Component{
        event.preventDefault()
        const TaskObj={
         TaskTitle:this.state.TaskTitle,
+        IncidentTitle:this.state.IncidentTitle,
         TaskId:this.state.RiskId,
         companyName:this.state.companyName,
         SiteAdress:this.state.SiteAdress,
@@ -55,6 +57,16 @@ class AddIncidentTask extends Component{
         id='TaskTitle'
         placeholder="Enter The Task's Title"
         name='TaskTitle'
+        onChange={this.change}/>
+        </div>
+
+        <div className='form_field'>
+          <label className='form_label' htmlFor='IncidentTitle'>Incident Title :</label>
+    <input type='text'
+        required
+        id='IncidentTitle'
+        placeholder="Enter The Incident's Title"
+        name='IncidentTitle'
         onChange={this.change}/>
         </div>
 
@@ -88,19 +100,6 @@ class AddIncidentTask extends Component{
     <option value="Corrective">Corrective</option>
     <option value="Preventive">Preventive</option>
     <option value="Improvement">Improvement</option>
-  </select>
-       </div>
-
-       <div className='form_field'>
-      <label className='form_label' htmlFor='RiskSeverity'>Risk Severity :</label> 
-     <select
-        id="RiskSeverity"
-        name='RiskSeverity'
-        onChange={this.change}>
-        <option default>Select Severity Level:</option> 
-    <option value="Critical">A Citical Risk</option>
-    <option value="Major">A Major Risk</option>
-    <option value="Minor">A Minor Risk</option>
   </select>
        </div>
 

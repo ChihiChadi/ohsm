@@ -87,7 +87,7 @@ class Register extends Component{
         </div>
 
         <div className='form_field'>
-        <label className='form_label' htmlFor='phonenumber'>Phone Number 2 :</label>
+        <label className='form_label' htmlFor='phonenumber2'>Phone Number 2 :</label>
     <input type="number"
         id='phonenumber2'
         placeholder="Enter Your Phone Number #2"

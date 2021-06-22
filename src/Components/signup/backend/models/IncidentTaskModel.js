@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const Task = new mongoose.Schema({
+const IncidentTask = new mongoose.Schema({
     TaskTitle:{type:String,},
+
+    IncidentTitle:{type:String,},
 
     TaskId:{type:Number},
 
@@ -16,4 +18,4 @@ const Task = new mongoose.Schema({
     
 });
 
-module.exports=mongoose.model('Tasks',Task)
+module.exports=mongoose.model('IncidentTasks',IncidentTask)
