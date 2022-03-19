@@ -120,8 +120,8 @@ router.post('/AddIncidentReports',passport.authenticate('jwt',{session : false})
       host: "smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "a919800e69052a",
-        pass: "4dbda1a8f4404e"
+        user: "17eb1d5c823096",
+        pass: "af8c536fbce573"
       }
     })
 
@@ -523,18 +523,22 @@ router.post('/RiskTasks/Add',passport.authenticate('jwt',{session : false}),asyn
               if(error)
                   res.status(500).json({message : {msgBody : "Error", msgError: true}});
               else
-                  res.status(200).json({message : {msgBody : "Successfully created report", msgError : false}});
+                  res.status(200).json({message : {msgBody : "Successfully created task", msgError : false}});
           })}})}});
 
 //OHSM: Risk Tasks
-router.get('/IdRisks/:id/Tasks',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
-  if (req.user.role==='OHSMManager'){
-    Risk.findById(req.params.id).populate('risktasks').exec((error,document)=>{
-      if(error)
-          res.status(500).json({message : {msgBody : "Error", msgError: true}});
-      else{
-          res.status(200).send(document.risktasks);  
-      }});}});
+router.get('/RiskTasks',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+    if (req.user.role==='OHSMManager')
+    {//const risk= await Risk.findById(req.params.id);
+      RiskTask.find().where({'companyName':req.user.company})
+    .sort({ name: -1 })
+    .then((Tasks) => {
+      res.status(200).send(Tasks);
+    })
+    .catch((err) => {
+      res.status(500).send({message: err.message || "Error Occured",});
+    });   
+  }}); 
   
 
 //OHSM: View Risk Task
@@ -582,33 +586,36 @@ router.get('/RiskTasks/edit/:id',passport.authenticate('jwt',{session : false}),
   });
 
   //OHSM: Add Incident Task
-  router.post('/IncidentReports/:id/Tasks/Add',passport.authenticate('jwt',{session : false}),async(req,res)=>{
+  router.post('/IncidentTasks/Add',passport.authenticate('jwt',{session : false}),async(req,res)=>{
     if(req.user.role==='OHSMManager'){
-    const report= await Report.findById(req.params.id);
+    //const report= await Report.findById(req.params.id);
     const task = new IncidentTask(req.body);
-    task.save(error=>{
-        if(error)
-            res.status(500).json({message : {msgBody : "Error", msgError: true}});
-        else{
-            req.user.incidenttasks.push(task);
-            report.incidenttasks.push(task);
-            req.user.save(error=>{
-                if(error)
-                    res.status(500).json({message : {msgBody : "Error", msgError: true}});
-                else
-                    res.status(200).json({message : {msgBody : "Successfully created report", msgError : false}});
-            })}})}});
+  task.save(error=>{
+      if(error)
+          res.status(500).json({message : {msgBody : "Error", msgError: true}});
+      else{
+          req.user.incidenttasks.push(task);
+          req.user.save(error=>{
+              if(error)
+                  res.status(500).json({message : {msgBody : "Error", msgError: true}});
+              else
+                  res.status(200).json({message : {msgBody : "Successfully created task", msgError : false}});
+          })}})}});
+
   
   //OHSM: Incident Tasks
-  router.get('/IncidentReports/:id/Tasks',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
-    if (req.user.role==='OHSMManager'){
-      Report.findById(req.params.id).populate('incidenttasks').exec((error,document)=>{
-        if(error)
-            res.status(500).json({message : {msgBody : "Error", msgError: true}});
-        else{
-            res.status(200).send(document.incidenttasks);  
-        }});}});
-    
+  router.get('/IncidentTasks',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{
+    if (req.user.role==='OHSMManager')
+    {//const incidnet= await Report.findById(req.params.id);
+      IncidentTask.find().where({'companyName':req.user.company})
+    .sort({ name: -1 })
+    .then((Tasks) => {
+      res.status(200).send(Tasks);
+    })
+    .catch((err) => {
+      res.status(500).send({message: err.message || "Error Occured",});
+    });   
+  }}); 
   
   //OHSM: View Incident Task
   router.get('/IncidentTasks/:id',passport.authenticate('jwt',{session : false}),async(req,res,next)=>{

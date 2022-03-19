@@ -17,7 +17,7 @@ class EditRiskTask extends Component {
       }
 
   componentDidMount() {
-    axios.get('/IdRisks/:id/Tasks/Edit/'+this.props.match.params.id)
+    axios.get('/RiskTasks/Edit/'+this.props.match.params.id)
       .then(res => {
         this.setState({
             TaskTitle: res.data.TaskTitle,
@@ -51,7 +51,7 @@ class EditRiskTask extends Component {
         TaskDetails: this.state.TaskDetails
     };
 
-    axios.put('/IdRisks/:id/Tasks/update/'+this.props.match.params.id, ReportObj)
+    axios.put('/RiskTasks/update/'+this.props.match.params.id, ReportObj)
       .then((res) => {
         console.log(res.data)
         console.log('Task successfully updated')
@@ -60,7 +60,7 @@ class EditRiskTask extends Component {
       })
 
     // Redirect to Tasks Page 
-    this.props.history.push('/IdRisks/:id/Tasks')
+    this.props.history.push('/Risk/Tasks')
   }
 
 

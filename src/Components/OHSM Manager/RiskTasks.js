@@ -24,14 +24,14 @@ const RiskTasks = props => {
                 alert("The Task is not deleted!");}}
 
     const fetchRisksTasks = async () => {
-      const res = await axios.get('/IdRisks/:id/Tasks');
+      const res = await axios.get('/RiskTasks');
       console.log(res.data);
       setTasks(res.data); };
 
     return(
         <div><center><h1>Risk Tasks List</h1></center>
         <div className="container_Big">
-        <Link to='/IdRisks/:id/Tasks/Add' className="btn btn-primary">Add Task</Link>
+        <Link to='/RiskTasks/Add' className="btn btn-primary">Add Task</Link>
         <center>
           <div className="container"> 
              <table className="table table-bordered">

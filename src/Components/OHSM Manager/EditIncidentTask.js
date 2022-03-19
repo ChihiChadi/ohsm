@@ -17,7 +17,7 @@ class EditIncidentTask extends Component {
       }
 
   componentDidMount() {
-    axios.get('/IncidentReports/:id/Tasks/Edit/'+this.props.match.params.id)
+    axios.get('/IncidentTasks/Edit/'+this.props.match.params.id)
       .then(res => {
         this.setState({
             TaskTitle: res.data.TaskTitle,
@@ -51,7 +51,7 @@ class EditIncidentTask extends Component {
         TaskDetails: this.state.TaskDetails
     };
 
-    axios.put('/IncidentReports/:id/Tasks/update/'+this.props.match.params.id, ReportObj)
+    axios.put('/IncidentTasks/update/'+this.props.match.params.id, ReportObj)
       .then((res) => {
         console.log(res.data)
         console.log('Task successfully updated')
@@ -60,7 +60,7 @@ class EditIncidentTask extends Component {
       })
 
     // Redirect to Tasks Page 
-    this.props.history.push('/IncidentReports/:id/Tasks')
+    this.props.history.push('/IncidentTasks')
   }
 
 

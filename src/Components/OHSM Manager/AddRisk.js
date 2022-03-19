@@ -104,11 +104,11 @@ class AddIncidentTask extends Component{
         name='RiskSeverity'
         onChange={this.change}>
         <option default>Select Severity Level:</option> 
-    <option value="Insignificant">An Insignificant Incident</option>
-    <option value="Minor">A Minor Incident</option>
-    <option value="Moderate">A Moderate Incident</option>
-    <option value="Major">A Major Incident</option>
-    <option value="Extreme">An Extreme Incident</option>
+    <option value="Insignificant">Insignificant</option>
+    <option value="Minor">Minor</option>
+    <option value="Moderate">Moderate</option>
+    <option value="Major">Major</option>
+    <option value="Extreme">Extreme</option>
   </select>
        </div>
 

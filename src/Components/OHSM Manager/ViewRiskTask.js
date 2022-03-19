@@ -16,7 +16,7 @@ const ViewRiskTask = () => {
     setTask(res.data);
   };
   return (
-    <div><center><h1>Risk Details</h1></center>
+    <div><center><h1>Risk Task Details</h1></center>
     <div className="container_Big"><center>
     <div className="container">
       <ul className="list-group"><h3>Details:</h3>

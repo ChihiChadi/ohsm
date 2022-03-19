@@ -55,8 +55,8 @@ return (
       <Route path="/IdRisks/Add" exact component={AddRisk}><AddRisk/></Route> 
       <Route path="/IdRisks/:id" exact component={ViewRisk}><ViewRisk/></Route>
       <Route path="/IdRisks/edit/:id" exact component={EditRisk}><EditRisk/></Route> 
-      <Route path="/IdRisks/:id/Tasks" exact component={RiskTasks}><RiskTasks/></Route>
-      <Route path="/IdRisks/:id/Tasks/Add" exact component={AddRiskTask}><AddRiskTask/></Route>
+      <Route path="/RiskTasks" exact component={RiskTasks}><RiskTasks/></Route>
+      <Route path="/RiskTasks/Add" exact component={AddRiskTask}><AddRiskTask/></Route>
       <Route path="/RiskTasks/:id" exact component={ViewRiskTask}><ViewRiskTask/></Route>
       <Route path="/RiskTasks/edit/:id" exact component={EditRiskTask}><EditRiskTask/></Route>
       
@@ -72,7 +72,7 @@ return (
       <Route path="/IncidentReports" exact component={IncidentReports}><IncidentReports/></Route>
       <Route path="/IncidentReports/Add" exact component={AddReport}><AddReport/></Route>
       <Route path="/IncidentReports/edit/:id" exact component={EditReport}><EditReport/></Route>
-      <Route path="/IncidentReports/:id/Tasks" exact component={ReportTasks}><ReportTasks/></Route>
+      <Route path="/IncidentTasks" exact component={ReportTasks}><ReportTasks/></Route>
       <Route path="/IncidentTasks/Add" exact component={AddIncidentTask}><AddIncidentTask/></Route>
       <Route path="/IncidentTasks/:id" exact component={ViewIncidentTask}><ViewIncidentTask/></Route>
       <Route path="/IncidentTasks/edit/:id" exact component={EditIncidentTask}><EditIncidentTask/></Route>

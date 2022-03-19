@@ -59,7 +59,7 @@ const IncidentReports = props => {
                   <td>{report.ReportedBy}</td>
                   <td><span><Link to={'/IncidentReports/'+report._id}><ZoomInRoundedIcon/></Link></span>
                   <span><Link to={'/IncidentReports/edit/'+report._id}><EditRoundedIcon/></Link></span>
-                  <span><Link to={`/IncidentReports/`+report._id+`/Tasks`}><BuildRoundedIcon/></Link></span>
+                  <span><Link to={`/IncidentTasks`}><BuildRoundedIcon/></Link></span>
                   <span><button className="Delete" onClick={() => { deleteReport(report._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}
                </tbody>

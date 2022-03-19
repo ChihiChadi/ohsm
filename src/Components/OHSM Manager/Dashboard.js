@@ -6,9 +6,9 @@ import ZingChart from 'zingchart-react';
 
 const Dashboard = () => {
   const [dashboard1, setDashboard1] = useState([
-    "nbReports", "nbEmployees","nbSites"]);
-  const [dashboard2, setDashboard2] = useState([]); 
-  const [dashboard3, setDashboard3] = useState([]); 
+    "nbReports", "nbEmployees", "nbSites"]);
+  const [dashboard2, setDashboard2] = useState([]);
+  const [dashboard3, setDashboard3] = useState([]);
   useEffect(() => {
     loadDashboard1();
     loadDashboard2();
@@ -29,42 +29,43 @@ const Dashboard = () => {
     console.log(res.data);
     setDashboard3(res.data);
   };
-  const config={
-    type: 'bar',
+  const config = {
+    type: "bar",
     plotarea: {
-      'adjust-layout': false
+      adjustLayout:true
     },
-    'scale-x': {
-      label: { /* Scale Title */
-        text: "Incident Report Title",
+    scaleX: {
+      label:{
+        text:"Here is  Reports"
       },
-      labels: [ "Report1", "Report2", "Report3", "Report4",  ] /* Scale Labels */
+      labels:["Report1","Report2","Report3","Report4"] 
     },
-    'scale-y': {
-      label: { /* Scale Title */
-        text: "Incident Severity",
+    scaleY: {
+      label:{
+        text:"Here is Severity"
       },
-      labels: [ "Minor", "Major","Critical"  ] /* Scale Labels */
+      values:["","Minor","Major","Extreme"] 
     },
     series: [
-      { values: ["Critical","Major","Major","Critical"]},
-     
+      {
+        values:["Major","Extreme","Extreme","Minor"]
+      },
       ]
   }
 
   return (
     <div><center><h1>Dashboard</h1></center>
-    <div className="container_Big"><center>
-    <div className="container">
-     <div className="Numbers">
-     <div className="numbers">Incidents reports: <span className="num" > {dashboard1.nbReports}</span></div>
-     <div className="numbers">Employees: <span className="num" >{dashboard1.nbEmployees}</span></div>
-     <div className="numbers">Sites: <span className="num" >{dashboard1.nbSites}</span></div>
-     </div><div className='Incidentchart'><ZingChart data={config}/></div>
-     </div> 
-     </center>
-     </div>
-     </div>
+      <div className="container_Big"><center>
+        <div className="container">
+          <div className="Numbers">
+            <div className="numbers">Incidents reports: <span className="num" > {dashboard1.nbReports}</span></div>
+            <div className="numbers">Employees: <span className="num" >{dashboard1.nbEmployees}</span></div>
+            <div className="numbers">Sites: <span className="num" >{dashboard1.nbSites}</span></div>
+          </div><div className='Incidentchart'><ZingChart data={config} /></div>
+        </div>
+      </center>
+      </div>
+    </div>
   );
 }
 export default Dashboard;

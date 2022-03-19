@@ -38,9 +38,9 @@ class AddIncidentTask extends Component{
         TaskType:this.state.TaskType,
         TaskDetails:this.state.TaskDetails
        }
-         axios.post('/IncidentReports/:id/Tasks/Add', TaskObj)
+         axios.post('/IncidentTasks/Add', TaskObj)
          .then(form=>console.log(form.data));
-         this.props.history.push('/IncidentReports');
+         this.props.history.push('/Incidenttasks');
          }
 
 

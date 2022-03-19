@@ -24,14 +24,14 @@ const ReportTasks = props => {
           alert("The Task is not deleted!");}}
 
     const fetchReportsTasks = async () => {
-      const res = await axios.get('/IncidentReports/:id/Tasks');
+      const res = await axios.get('/IncidentTasks');
       console.log(res.data);
       setTasks(res.data); };
 
     return(
         <div><center><h1>Report Task List</h1></center>
         <div className="container_Big">
-        <Link to='/IncidentReports/:id/Tasks/Add' className="btn btn-primary">Add task</Link>
+        <Link to='/IncidentTasks/Add' className="btn btn-primary">Add task</Link>
         <center>
           <div className="container"> 
              <table className="table table-bordered">
@@ -50,7 +50,7 @@ const ReportTasks = props => {
                   <td>{task.companyName}</td> 
                   <td>{task.SiteAdress}</td>
                   <td><span><Link to={'/IncidentTasks/'+task._id}><ZoomInRoundedIcon/></Link></span>
-                  <span><Link to={'/IncidentReports/:id/Tasks/edit/'+task._id}><EditRoundedIcon/></Link></span>
+                  <span><Link to={'/IncidentTasks/edit/'+task._id}><EditRoundedIcon/></Link></span>
                   <span><button className="Delete" onClick={() => { deleteTask(task._id) }}><DeleteForeverRoundedIcon/></button></span></td>
                   </tr>);})}
                </tbody>

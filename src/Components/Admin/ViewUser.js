@@ -16,7 +16,8 @@ const ViewUser = () => {
     setUser(res.data);
   };
   return (
-    <div><center><h1>User Informations</h1>
+    <div><center><h1>User Informations</h1></center>
+     <div className="container_Big"><center>
     <div className="container">
       <ul className="list-group"><h3>Informations:</h3>
         <li className="list-group-item">Employee ID: {user.IdNumber}</li>
@@ -32,7 +33,7 @@ const ViewUser = () => {
       </ul>
     </div>
     </center>
-    </div>
+    </div> </div>
   );
 };
 

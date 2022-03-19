@@ -54,7 +54,7 @@ const IdRisks = props => {
                   <td>{risk.RiskType}</td>
                 <td><span><Link to={`/IdRisks/`+risk._id}><ZoomInRoundedIcon/></Link></span>
                 <span><Link to={`/IdRisks/edit/`+risk._id}><EditRoundedIcon/></Link></span>
-                <span><Link to={`/IdRisks/`+risk._id+`/Tasks`}><BuildRoundedIcon/></Link></span>
+                <span><Link to={`/RiskTasks`}><BuildRoundedIcon/></Link></span>
                 <span><button className="Delete" onClick={() => { deleteRisk(risk._id) }}><DeleteForeverRoundedIcon/></button></span>
                   </td></tr>);})}
                </tbody>
